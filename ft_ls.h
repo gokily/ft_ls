@@ -6,9 +6,13 @@
 #include <stdint.h>
 #include <dirent.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <fcntl.h>
 #include <pwd.h>
 #include <time.h>
+#include "libft/libft.h"
+
+#include <stdio.h>
 
 # define LONG 1
 # define REC 1 << 1
@@ -24,4 +28,7 @@ typedef	struct	s_ls
 	t_list		*ldir;
 }				t_ls;
 
+t_ls			*ft_parsels(int ac, char **av);
+
+void	ft_print_t_ls(t_ls *ls);
 #endif
