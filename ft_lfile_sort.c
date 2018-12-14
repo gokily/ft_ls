@@ -1,9 +1,19 @@
 #include "ft_ls.h"
 
+static void ft_lfile_swap(t_lfile **prev, t_lfile **current)
+{
+	t_lfile	*tmp;
+
+	tmp = *prev;
+	*prev = *current;
+	*current = tmp;
+	(*current)->next = (*prev)->next;
+	(*prev)->next = *current;
+}
+
 static void	ft_lfile_sort_mtim(t_lfile **lfile)
 {
 	t_lfile		*prev;
-	t_lfile		*current;
 	unsigned char	flag;
 
 	flag = 0;
@@ -15,15 +25,11 @@ static void	ft_lfile_sort_mtim(t_lfile **lfile)
 		{
 			if (prev->mtim.tv_sec < prev->next->mtim.tv_sec)
 			{
-				current = prev->next;
-				prev->next = current->next;
-				current->next = prev;
-				if (prev == *lfile)
-					*lfile = current;
-				prev = current;
+				ft_lfile_swap(&prev, &(prev->next));
 				flag = 0;
 			}
-			prev = prev->next;
+			else
+				prev = prev->next;
 		}
 	}
 	return ;
@@ -32,7 +38,6 @@ static void	ft_lfile_sort_mtim(t_lfile **lfile)
 static void	ft_lfile_sort_name(t_lfile **lfile)
 {
 	t_lfile		*prev;
-	t_lfile		*current;
 	unsigned char	flag;
 
 	flag = 0;
@@ -47,15 +52,12 @@ static void	ft_lfile_sort_name(t_lfile **lfile)
 				prev->name, prev->next->name);
 			if (ft_strcmp(prev->name, prev->next->name) > 0)
 			{
-				current = prev->next;
-				prev->next = current->next;
-				current->next = prev;
-				if (prev == *lfile)
-					*lfile = current;
-				prev = current;
+				puts("SWAPPING");
+				ft_lfile_swap(&prev, &(prev->next));
 				flag = 0;
 			}
-			prev = prev->next;
+			else
+				prev = prev->next;
 		}
 	}
 	return ;
