@@ -24,7 +24,7 @@ t_ls	*ft_parseflag(char *flag, t_ls *ls)
 		else if (*flag == 'r')
 			ls->flag |= REV;
 		else if (*flag == 't')
-			ls->flag |= TIME;
+			ls->flag |= MTIM;
 		flag++;
 	}
 	return (ls);
