@@ -8,16 +8,24 @@ int		main(int ac, char **av)
 	DIR	*tmp;
 	int	n;
 	struct stat	*statbuf;
+	struct dirent	*elem;
+	t_ls		*ls;
 
-	tmp = opendir("/");
+	tmp = opendir(".");
+	while ((elem = readdir(tmp)))
+	{
+		printf("%s", elem->d_name);
+		if (elem->d_type == DT_DIR)
+			puts(" is a directory");
+		else
+			puts("");
+	}
 	n = closedir(tmp);
 	printf("%i\n", n);
 
-	statbuf = malloc(sizeof(struct stat));
-	n = stat("main.c", statbuf);
-	printf("Last access of file is at %s", ctime(&statbuf->st_atime));
-
-	ft_print_t_ls(ft_parsels(ac, av));
-
+	ls = ft_parsels(ac, av);
+	ft_print_t_ls(ls);
+	if (ls != NULL)
+		puts("parsel");
 	return (1);
 }

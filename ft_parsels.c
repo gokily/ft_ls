@@ -2,12 +2,11 @@
 
 t_ls	*ft_parsedir(char *dirpath, t_ls *ls)
 {
-	t_list	*elem;
+	t_lfile	*elem;
 
-	if (!(elem = ft_lstnew(dirpath, ft_strlen(dirpath) + 1)))
+	if (!(elem = ft_lfile_new(dirpath, LSARG)))
 		return (NULL);
-	ft_lstpush(&ls->ldir, elem);
-	//ft_lstadd(&ls->ldir, elem);
+	ft_lfile_push(&ls->ldir, elem);
 	return (ls);
 }
 
@@ -33,11 +32,11 @@ t_ls	*ft_parseflag(char *flag, t_ls *ls)
 
 t_ls	*ft_parse_noarg(t_ls *ls)
 {
-	t_list	*elem;
+	t_lfile	*elem;
 
 	ls->flag = 0;
 	ls->nbdir = 1;
-	if (!(elem = ft_lstnew(".", 2)))
+	if (!(elem = ft_lfile_new(".", LSARG)))
 		return (NULL);
 	ls->ldir = elem;
 	return (ls);

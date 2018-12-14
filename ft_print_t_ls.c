@@ -5,7 +5,7 @@
 
 void	ft_print_t_ls(t_ls *ls)
 {
-	t_list	*elem;
+	t_lfile	*elem;
 	if (ls == NULL)
 	{
 		puts("struct is null");
@@ -16,7 +16,7 @@ void	ft_print_t_ls(t_ls *ls)
 	elem = ls->ldir;
 	while (elem)
 	{
-		printf("%s\n", (char *)elem->content);
+		printf("%s last accessed at %s\n", (char *)elem->name, ctime(&elem->atim.tv_sec));
 		elem = elem->next;
 	}
 	return ;
