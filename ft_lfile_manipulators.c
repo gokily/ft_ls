@@ -36,6 +36,7 @@ t_lfile	*ft_lfile_new(const char *filepath, unsigned char flag)
 	lstat(filepath, &statbuf);
 	name = ft_filepath(filepath, flag);
 	elem->name = name;
+	elem->fullpath = filepath;
 	elem->mode = statbuf.st_mode;
 	elem->nlink = statbuf.st_nlink;
 	elem->uid = statbuf.st_uid;

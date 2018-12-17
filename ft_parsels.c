@@ -18,7 +18,10 @@ t_ls	*ft_parseflag(char *flag, t_ls *ls)
 		if (*flag == 'l')
 			ls->flag |= LONG;
 		else if (*flag == 'R')
+		{
 			ls->flag |= REC;
+			ls->flag |= SEVERAL;
+		}
 		else if (*flag == 'a')
 			ls->flag |= ALL;
 		else if (*flag == 'r')
@@ -52,6 +55,7 @@ t_ls	*ft_parsels(int ac, char **av)
 	ls->nbdir = 0;
 	ls->flag = 0;
 	ls->ldir = NULL;
+	ls->flag |= FIRST;
 	i = 1;
 	if (ac == 1)
 		return (ft_parse_noarg(ls));

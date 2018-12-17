@@ -22,7 +22,8 @@ int		main(int ac, char **av)
 	printf("%i\n", n);
 
 	ls = ft_parsels(ac, av);
-	ft_lfile_sort(&ls->ldir, ls->flag);
+	//ft_lfile_sort(&ls->ldir, ls->flag);
+	ft_print_ls(ls);
 	ft_print_t_ls(ls);
 	return (1);
 }
