@@ -20,5 +20,7 @@ void		ft_lfile_sort(t_lfile **lfile, unsigned char flag)
 	ft_lfile_sort_name(lfile);
 	if (flag & MTIM)
 		ft_lfile_sort_mtim(lfile);
+	if (flag & REV)
+		ft_lfile_rev(lfile);
 	return ;	
 }

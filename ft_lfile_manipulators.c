@@ -1,6 +1,6 @@
 #include "ft_ls.h"
 
-char	*ft_filepath(const char *filepath, unsigned char flag)
+char	*ft_filename(const char *filepath, unsigned char flag)
 {
 	char	*name;
 
@@ -17,8 +17,21 @@ char	*ft_filepath(const char *filepath, unsigned char flag)
 	}
 	return (name);
 }
+void	ft_fill_lfile(t_lfile *elem, struct stat statbuf)
+{
+	elem->mode = statbuf.st_mode;
+	elem->nlink = statbuf.st_nlink;
+	elem->size = statbuf.st_size;
+	elem->blksize = statbuf.st_blksize;
+	elem->blkcnt = statbuf.st_blocks;
+	elem->uid = statbuf.st_uid;
+	elem->gid = statbuf.st_gid;
+	elem->atim = statbuf.st_atim;
+	elem->mtim = statbuf.st_mtim;
+	elem->ctim = statbuf.st_ctim;
+}
 
-t_lfile	*ft_lfile_new(const char *filepath, unsigned char flag)
+t_lfile	*ft_lfile_new(char *filepath, unsigned char flag)
 {
 	t_lfile		*elem;
 	struct stat	statbuf;
@@ -34,16 +47,13 @@ t_lfile	*ft_lfile_new(const char *filepath, unsigned char flag)
 	}
 	*/
 	lstat(filepath, &statbuf);
-	name = ft_filepath(filepath, flag);
+	if (!(name = ft_filename(filepath, flag)))
+	{
+		free(elem);
+		return (NULL);
+	}
 	elem->name = name;
 	elem->fullpath = filepath;
-	elem->mode = statbuf.st_mode;
-	elem->nlink = statbuf.st_nlink;
-	elem->uid = statbuf.st_uid;
-	elem->gid = statbuf.st_gid;
-	elem->atim = statbuf.st_atim;
-	elem->mtim = statbuf.st_mtim;
-	elem->ctim = statbuf.st_ctim;
 	elem->next = NULL;
 	return (elem);
 }
@@ -64,4 +74,18 @@ void	ft_lfile_push(t_lfile **lst, t_lfile *elem)
 		tmp = tmp->next;
 	tmp->next = elem;
 	return ;
+}
+
+void	ft_lfile_del(t_lfile *file)
+{
+	t_lfile		*elem;
+
+	elem = file;
+	while (elem != NULL)
+	{
+		elem = file->next;
+		free(file->name);
+		free(file->fullpath);
+		free(file);
+	}	
 }
