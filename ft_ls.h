@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
+/*   Updated: 2018/12/28 14:56:27 by gly              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_LS_H
 # define FT_LS_H
 
@@ -23,7 +35,7 @@
 # define FIRST 1 << 6
 # define LSARG 1
 
-typedef struct		s_lfile
+typedef struct		s_file
 {
 	char			*name;
 	char			*fullpath;
@@ -37,6 +49,11 @@ typedef struct		s_lfile
 	struct timespec	atim;
 	struct timespec	mtim;
 	struct timespec	ctim;
+}					t_file;
+
+typedef struct		s_lfile
+{
+	t_file			*file;	
 	struct s_lfile	*next;
 }					t_lfile;
 
@@ -55,7 +72,7 @@ void		ft_lfile_sort(t_lfile **lfile, unsigned char flag);
 void	ft_lfile_del(t_lfile *file);
 
 void	ft_print_ls(t_ls *ls);
-int		ft_print_dir(t_lfile *ldir, unsigned char flag);
+int		ft_print_dir(t_lfile *dir, unsigned char flag);
 void		ft_print_lfile(t_lfile *file, unsigned char flag);
 void	ft_print_file_short(t_lfile *file);
 void	ft_print_file_long(t_lfile *file);

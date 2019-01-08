@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_print_ls.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 14:52:30 by gly               #+#    #+#             */
+/*   Updated: 2018/12/28 14:52:48 by gly              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
-//La fonction qui va appeler les differents repertoires appeles par ls.
 //Voir si on ne veut pas un retour pour ft_print_dir
 void	ft_print_ls(t_ls *ls)
 {

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lfile_manipulators.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/28 16:06:43 by gly               #+#    #+#             */
+/*   Updated: 2018/12/28 16:13:33 by gly              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
 char	*ft_filename(const char *filepath, unsigned char flag)
@@ -17,7 +29,7 @@ char	*ft_filename(const char *filepath, unsigned char flag)
 	}
 	return (name);
 }
-void	ft_fill_lfile(t_lfile *elem, struct stat statbuf)
+void	ft_fill_file(t_file *elem, struct stat statbuf)
 {
 	elem->mode = statbuf.st_mode;
 	elem->nlink = statbuf.st_nlink;
@@ -36,24 +48,22 @@ t_lfile	*ft_lfile_new(char *filepath, unsigned char flag)
 	t_lfile		*elem;
 	struct stat	statbuf;
 	char		*name;
+	t_file		*file;
 
 	if (!(elem = malloc(sizeof(t_lfile))))
 		return (NULL);
-	/*
-	if (lstat(filepath, &statbuf) == -1)
-	{
-		ft_lstat_err(errno);
-		return (NULL);
-	}
-	*/
-	lstat(filepath, &statbuf);
+	lstat(filepath, &statbuf);//comment traiter les erreurs de file (acces ou autre)?
 	if (!(name = ft_filename(filepath, flag)))
 	{
 		free(elem);
 		return (NULL);
 	}
-	elem->name = name;
-	elem->fullpath = filepath;
+	if (!(file = malloc(sizeof(t_file))))
+		return (NULL);
+	elem->file = file;
+	file->name = name;
+	file->fullpath = filepath;
+	ft_fill_fill(file, statbuf);
 	elem->next = NULL;
 	return (elem);
 }
@@ -76,16 +86,19 @@ void	ft_lfile_push(t_lfile **lst, t_lfile *elem)
 	return ;
 }
 
-void	ft_lfile_del(t_lfile *file)
+void	ft_lfile_del(t_lfile *lfile)
 {
 	t_lfile		*elem;
+	t_file		*file;
 
-	elem = file;
+	elem = lfile;
 	while (elem != NULL)
 	{
-		elem = file->next;
+		elem = lfile->next;
+		file = lfile->file;
 		free(file->name);
 		free(file->fullpath);
 		free(file);
+		free(lfile);
 	}	
 }
