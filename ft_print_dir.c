@@ -19,10 +19,11 @@ static void		ft_print_dir_total(t_lfile *file)
 	size = 0;
 	while (file)
 	{
-		size += file->blkcnt;
+		size += file->file->blkcnt;
 		file = file->next;
 	}
-	ft_printf("total %u\n", size);
+	printf("total %u\n", size);
+	//ft_printf("total %u\n", size);
 	return ;
 }
 
@@ -35,7 +36,7 @@ static t_lfile	*ft_getfile(t_lfile *ldir)
 	t_lfile			*lfile;
 
 	lfile = NULL;
-	if (!(dir = opendir(ldir->fullpath)))
+	if (!(dir = opendir(ldir->file->fullpath)))
 		return (ft_dir_error(1));
 	while ((elem = readdir(dir)))
 	{
@@ -43,7 +44,7 @@ static t_lfile	*ft_getfile(t_lfile *ldir)
 		if (!fullpath || !(lst_elem = ft_lfile_new(fullpath, 0)))
 		{
 			closedir(dir);
-			ft_lfile_del(lfile);
+			ft_lfile_delall(lfile);
 			return (ft_dir_error(2));
 		}
 		ft_lfile_push(&lfile, lst_elem);
@@ -67,7 +68,8 @@ int			ft_print_dir(t_lfile *dir, unsigned char flag)
 	else
 		ft_putendl("");
 	if (flag & SEVERAL)
-		ft_printf("%s:\n", dir->name);
+		//ft_printf("%s:\n", dir->file->name);
+		printf("%s:\n", dir->file->name);
 	if (flag & LONG)
 		ft_print_dir_total(lfile);
 	ft_print_lfile(lfile, flag);
@@ -82,7 +84,7 @@ int			ft_print_dir(t_lfile *dir, unsigned char flag)
 				if(!(ret = ft_print_dir(lfile, flag)))
 					return (0);
 			}
-			file = file->next;
+			lfile = lfile->next;
 		}
 	}
 	return (1);

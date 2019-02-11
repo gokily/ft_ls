@@ -1,7 +1,5 @@
 #include "ft_ls.h"
 
-#include <stdio.h>
-
 int		main(int ac, char **av)
 {
 	DIR	*tmp;

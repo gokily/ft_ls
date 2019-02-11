@@ -1,8 +1,10 @@
 #include "ft_ls.h"
 
-void	ft_print_t_ls(t_ls *ls)
+void	print_t_ls(t_ls *ls)
 {
 	t_lfile	*elem;
+	t_file	*file;
+
 	if (ls == NULL)
 	{
 		puts("struct is null");
@@ -13,7 +15,8 @@ void	ft_print_t_ls(t_ls *ls)
 	elem = ls->ldir;
 	while (elem)
 	{
-		printf("%s last modified at %s\n", (char *)elem->name, ctime(&elem->mtim.tv_sec));
+		file = elem->file;
+		printf("%s last modified at %s\n", (char *)file->name, ctime(&file->mtim.tv_sec));
 		elem = elem->next;
 	}
 	return ;

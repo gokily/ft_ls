@@ -15,6 +15,7 @@
 char	*ft_filename(const char *filepath, unsigned char flag)
 {
 	char	*name;
+	char	*slash;
 
 	if (flag == LSARG)
 	{
@@ -23,12 +24,13 @@ char	*ft_filename(const char *filepath, unsigned char flag)
 	}
 	else 
 	{
-		name = ft_strrchr(filepath, '/');
-		if (!(name = ft_strdup(name != NULL ? name + 1 : filepath)))
+		slash = ft_strrchr(filepath, '/');
+		if (!(name = ft_strdup(slash != NULL ? slash + 1 : filepath)))
 			return (NULL);
 	}
 	return (name);
 }
+
 void	ft_fill_file(t_file *elem, struct stat statbuf)
 {
 	elem->mode = statbuf.st_mode;
@@ -63,7 +65,7 @@ t_lfile	*ft_lfile_new(char *filepath, unsigned char flag)
 	elem->file = file;
 	file->name = name;
 	file->fullpath = filepath;
-	ft_fill_fill(file, statbuf);
+	ft_fill_file(file, statbuf);
 	elem->next = NULL;
 	return (elem);
 }
@@ -86,7 +88,7 @@ void	ft_lfile_push(t_lfile **lst, t_lfile *elem)
 	return ;
 }
 
-void	ft_lfile_del(t_lfile *lfile)
+void	ft_lfile_delall(t_lfile *lfile)
 {
 	t_lfile		*elem;
 	t_file		*file;

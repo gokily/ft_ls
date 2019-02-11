@@ -20,6 +20,7 @@ SRC		=	ft_print_ls.c	\
 			ft_print_file_short.c	\
 			ft_lfile_manipulators.c	\
 			ft_lfile_sort.c	\
+			ft_dir_error.c	\
 
 OBJ		=	$(SRC:.c=.o)
 
@@ -29,15 +30,20 @@ CFLAGS	=	-Wall -Wextra -Werror
 
 LIBFT	=	./libft/libft.a
 
+LIBFTFLAG	=	-lft -L libft
+
 RM		=	/bin/rm -f
 
 all		:	$(NAME)
 
 $(NAME)	:	$(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) ft_strjoin_three.c print_t_ls.c $(LIBFTFLAG) 
+	
+$(LIBFT) :
+	make -C libft
 
 %.o		:	%.c
-	$(CC) $(CFLAGS) -lft -L libft $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean	:
 	$(RM) $(OBJ)

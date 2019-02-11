@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "libft.h"
+#include "libft/libft.h"
 
 char	*ft_strjoin_three(char *first, char *second, char *third)
 {

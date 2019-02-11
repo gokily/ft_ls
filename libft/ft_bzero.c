@@ -1,40 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_ls.c                                      :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/28 14:52:30 by gly               #+#    #+#             */
-/*   Updated: 2018/12/28 14:52:48 by gly              ###   ########.fr       */
+/*   Created: 2018/11/07 13:11:44 by gly               #+#    #+#             */
+/*   Updated: 2018/11/20 10:34:09 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include <string.h>
 
-//Voir si on ne veut pas un retour pour ft_print_dir
-void	ft_print_ls(t_ls *ls)
+void	ft_bzero(void *s, size_t n)
 {
-	t_lfile	*ldir;
+	size_t			i;
+	unsigned char	*tmp;
 
-	ldir = ls->ldir;
-	if (ls->nbdir > 1)
-		ls->flag |= SEVERAL;
-	while (ldir != NULL)
+	i = 0;
+	tmp = (unsigned char *)s;
+	while (i < n)
 	{
-		ft_print_dir(ldir, ls->flag);
-		ldir = ldir->next;
+		tmp[i] = 0;
+		i++;
 	}
 	return ;
-}
-
-int		main(int ac, char **av)
-{
-	t_ls		*ls;
-
-	ls = ft_parsels(ac, av);
-	ft_lfile_sort(&ls->ldir, ls->flag);
-	ft_print_ls(ls);
-	//print_t_ls(ls);
-	return (1);
 }
