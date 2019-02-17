@@ -13,11 +13,7 @@ void		ft_print_lfile(t_lfile *file, unsigned char flag)
 {
 	while (file != NULL)
 	{
-		// something is false here the conditions.
-		if (!(flag & ALL) &&
-			ft_strcmp(file->file->name, ".") && ft_strcmp(file->file->name, ".."))
-				ft_print_file(file->file, flag);
-		else
+		if ((flag & ALL) || file->file->name[0] != '.')
 			ft_print_file(file->file, flag);
 		file = file->next;
 	}
