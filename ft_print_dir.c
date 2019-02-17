@@ -56,14 +56,15 @@ static t_lfile	*ft_getfile(t_lfile *ldir)
 //La fonciton recursive
 int			ft_print_dir(t_lfile *dir, t_ls *ls)
 {
+	static int	first = 1;
 	t_lfile		*lfile;
 	t_file		*file;
 
 	if (!(lfile = ft_getfile(dir)))
 		return (0);
 	ft_lfile_sort(&lfile, ls->flag);
-	if (ls->flag & FIRST)
-		ls->flag ^= FIRST;
+	if (first == 1)
+		first = 0;
 	else
 		ft_putendl("");
 	if (ls->flag & SEVERAL)

@@ -32,7 +32,6 @@
 # define REV 1 << 3
 # define MTIM 1 << 4
 # define SEVERAL 1 << 5
-# define FIRST 1 << 6
 # define LSARG 1
 
 typedef struct		s_file
