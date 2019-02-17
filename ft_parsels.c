@@ -19,6 +19,7 @@ t_ls	*ft_parsedir(char *dirpath, t_ls *ls)
 	if (!(elem = ft_lfile_new(dirpath, LSARG)))
 		return (NULL);
 	ft_lfile_push(&ls->ldir, elem);
+	ls->nbdir++;
 	return (ls);
 }
 
@@ -45,18 +46,6 @@ t_ls	*ft_parseflag(char *flag, t_ls *ls)
 	return (ls);
 }
 
-t_ls	*ft_parse_noarg(t_ls *ls)
-{
-	t_lfile	*elem;
-
-	ls->flag = 0;
-	ls->nbdir = 1;
-	if (!(elem = ft_lfile_new(".", LSARG)))
-		return (NULL);
-	ls->ldir = elem;
-	return (ls);
-}
-
 t_ls	*ft_parsels(int ac, char **av)
 {
 	t_ls	*ls;
@@ -65,8 +54,6 @@ t_ls	*ft_parsels(int ac, char **av)
 	if(!(ls = ft_t_ls_new()))
 		return (NULL);
 	i = 1;
-	if (ac == 1)
-		return (ft_parse_noarg(ls));
 	while (i < ac)
 	{
 		if (av[i][0] == '-')
@@ -75,7 +62,6 @@ t_ls	*ft_parsels(int ac, char **av)
 		{
 			if (!(ls = ft_parsedir(av[i], ls)))
 				return (NULL);
-			ls->nbdir++;
 		}
 		i++;
 	}
