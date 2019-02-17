@@ -27,7 +27,7 @@ static void		ft_print_dir_total(t_lfile *file)
 	return ;
 }
 
-static t_lfile	*ft_getfile(t_lfile *ldir)
+static t_lfile	*ft_getfile_in_dir(t_lfile *ldir)
 {
 	DIR				*dir;
 	struct dirent	*elem;
@@ -60,7 +60,7 @@ int			ft_print_dir(t_lfile *dir, t_ls *ls)
 	t_lfile		*lfile;
 	t_file		*file;
 
-	if (!(lfile = ft_getfile(dir)))
+	if (!(lfile = ft_getfile_in_dir(dir)))
 		return (0);
 	ft_lfile_sort(&lfile, ls->flag);
 	if (first == 1)
@@ -68,8 +68,8 @@ int			ft_print_dir(t_lfile *dir, t_ls *ls)
 	else
 		ft_putendl("");
 	if (ls->flag & SEVERAL)
-		//ft_printf("%s:\n", dir->file->name);
-		printf("%s:\n", dir->file->name);
+		//ft_printf("%s:\n", dir->file->fullpath);
+		printf("%s:\n", dir->file->fullpath);
 	if (ls->flag & LONG)
 		ft_print_dir_total(lfile);
 	ft_print_lfile(lfile, ls->flag);
