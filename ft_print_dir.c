@@ -54,26 +54,25 @@ static t_lfile	*ft_getfile(t_lfile *ldir)
 }
 
 //La fonciton recursive
-int			ft_print_dir(t_lfile *dir, unsigned char flag)
+int			ft_print_dir(t_lfile *dir, t_ls *ls)
 {
 	t_lfile		*lfile;
 	t_file		*file;
-	int			ret;
 
 	if (!(lfile = ft_getfile(dir)))
 		return (0);
-	ft_lfile_sort(&lfile, flag);
-	if (flag & FIRST)
-		flag ^= FIRST;
+	ft_lfile_sort(&lfile, ls->flag);
+	if (ls->flag & FIRST)
+		ls->flag ^= FIRST;
 	else
 		ft_putendl("");
-	if (flag & SEVERAL)
+	if (ls->flag & SEVERAL)
 		//ft_printf("%s:\n", dir->file->name);
 		printf("%s:\n", dir->file->name);
-	if (flag & LONG)
+	if (ls->flag & LONG)
 		ft_print_dir_total(lfile);
-	ft_print_lfile(lfile, flag);
-	if (flag & REC)
+	ft_print_lfile(lfile, ls->flag);
+	if (ls->flag & REC)
 	{
 		while (lfile != NULL)
 		{
@@ -81,7 +80,7 @@ int			ft_print_dir(t_lfile *dir, unsigned char flag)
 			if (S_ISDIR(file->mode) && ft_strcmp(file->name, ".") &&
 				ft_strcmp(file->name, ".."))
 			{
-				if(!(ret = ft_print_dir(lfile, flag)))
+				if(!(ft_print_dir(lfile, ls)))
 					return (0);
 			}
 			lfile = lfile->next;

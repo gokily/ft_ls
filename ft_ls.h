@@ -75,7 +75,7 @@ t_ls	*ft_t_ls_new(void);
 
 
 void	ft_print_ls(t_ls *ls);
-int		ft_print_dir(t_lfile *dir, unsigned char flag);
+int		ft_print_dir(t_lfile *dir, t_ls *ls);
 void		ft_print_lfile(t_lfile *file, unsigned char flag);
 void	ft_print_file_short(t_file *file);
 void	ft_print_file_long(t_file *file, unsigned char flag);

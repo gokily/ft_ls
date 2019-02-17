@@ -22,7 +22,7 @@ void	ft_print_ls(t_ls *ls)
 		ls->flag |= SEVERAL;
 	while (ldir != NULL)
 	{
-		ft_print_dir(ldir, ls->flag);
+		ft_print_dir(ldir, ls);
 		ldir = ldir->next;
 	}
 	return ;
@@ -35,6 +35,6 @@ int		main(int ac, char **av)
 	ls = ft_parsels(ac, av);
 	ft_lfile_sort(&ls->ldir, ls->flag);
 	ft_print_ls(ls);
-	//print_t_ls(ls);
+	print_t_ls(ls);
 	return (1);
 }
