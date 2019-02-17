@@ -19,6 +19,7 @@ SRC		=	ft_print_ls.c	\
 			ft_print_file_long.c	\
 			ft_print_file_short.c	\
 			ft_lfile_manipulators.c	\
+			ft_t_ls_manipulators.c	\
 			ft_lfile_sort.c	\
 			ft_dir_error.c	\
 

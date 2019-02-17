@@ -62,12 +62,8 @@ t_ls	*ft_parsels(int ac, char **av)
 	t_ls	*ls;
 	int		i;
 
-	if (!(ls = malloc(sizeof(t_ls))))
+	if(!(ls = ft_t_ls_new()))
 		return (NULL);
-	ls->nbdir = 0;
-	ls->flag = 0;
-	ls->ldir = NULL;
-	ls->flag |= FIRST;
 	i = 1;
 	if (ac == 1)
 		return (ft_parse_noarg(ls));
@@ -81,6 +77,10 @@ t_ls	*ft_parsels(int ac, char **av)
 			ls->nbdir++;
 		}
 		i++;
+	}
+	if (ls->nbdir == 0)
+	{
+		ft_parsedir(".", ls);
 	}
 	return (ls);
 }

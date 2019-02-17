@@ -68,8 +68,11 @@ t_ls				*ft_parsels(int ac, char **av);
 
 t_lfile	*ft_lfile_new(char *filepath, unsigned char flag);
 void	ft_lfile_push(t_lfile **lst, t_lfile *elem);
-void		ft_lfile_sort(t_lfile **lfile, unsigned char flag);
+void	ft_lfile_sort(t_lfile **lfile, unsigned char flag);
 void	ft_lfile_delall(t_lfile *file);
+
+t_ls	*ft_t_ls_new(void);
+
 
 void	ft_print_ls(t_ls *ls);
 int		ft_print_dir(t_lfile *dir, unsigned char flag);
@@ -77,8 +80,11 @@ void		ft_print_lfile(t_lfile *file, unsigned char flag);
 void	ft_print_file_short(t_file *file);
 void	ft_print_file_long(t_file *file, unsigned char flag);
 
+char	*ft_ls_time(time_t time);
+
 t_lfile	*ft_dir_error(int n);
 
+//libft
 char	*ft_strjoin_three(char *first, char *second, char *third);
 
 //debug
