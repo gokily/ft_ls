@@ -73,14 +73,13 @@ t_ls	*ft_parsels(int ac, char **av)
 			ls = ft_parseflag(av[i], ls);
 		else
 		{
-			ls = ft_parsedir(av[i], ls);
+			if (!(ls = ft_parsedir(av[i], ls)))
+				return (NULL);
 			ls->nbdir++;
 		}
 		i++;
 	}
 	if (ls->nbdir == 0)
-	{
-		ft_parsedir(".", ls);
-	}
+		ls = ft_parsedir(".", ls);
 	return (ls);
 }
