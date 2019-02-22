@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 16:06:43 by gly               #+#    #+#             */
-/*   Updated: 2018/12/28 16:13:33 by gly              ###   ########.fr       */
+/*   Updated: 2019/02/22 12:55:52 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	ft_fill_file(t_file *elem, struct stat statbuf)
 	elem->blkcnt = statbuf.st_blocks;
 	elem->uid = statbuf.st_uid;
 	elem->gid = statbuf.st_gid;
-	elem->atim = statbuf.st_atim;
-	elem->mtim = statbuf.st_mtim;
-	elem->ctim = statbuf.st_ctim;
+	elem->atim = statbuf.st_atimespec;
+	elem->mtim = statbuf.st_mtimespec;
+	elem->ctim = statbuf.st_ctimespec;
 }
 
 t_lfile	*ft_lfile_new(char *filepath, unsigned char flag)
