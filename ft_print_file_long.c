@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_print_file_long.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/22 14:48:59 by gly               #+#    #+#             */
+/*   Updated: 2019/02/22 14:53:57 by gly              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
 int filetypeletter(int mode)
@@ -44,17 +56,17 @@ char    *ft_lsperms(int mode)
     return(perms);
 }
 
-void	ft_print_file_long(t_file *file, unsigned char flag)
+int		ft_print_file_long(t_file *file, unsigned char flag)
 {
 	char	*perms;
+	char	*time_str;
 	
 	perms = ft_lsperms(file->mode);
 	(void)flag;
-	//ft_printf("%s\t%u\t%s\t%s\t%u\t%s\t%s\n", perms, file->nlink, file->uid,
-	//	file->gid, file->size, ctime(file->mtim), file->name);
-	
-	//need to correct the ctime thing, maybe make own version
-	printf("%s\t%u\t%u\t%u\t%u\t%s\t%s\n", perms, (unsigned int)file->nlink, file->uid,
-		file->gid, (unsigned int)file->size, file->name, ctime(&file->mtim.tv_sec));
-	return ;
+	if (!(time_str = ft_get_time(file->mtim)))
+		return (0);
+	printf("%s\t%u\t%u\t%u\t%u\t%s %s\n", perms, (unsigned int)file->nlink, file->uid,
+		file->gid, (unsigned int)file->size, time_str, file->name);
+	free(time_str);
+	return (1);
 }

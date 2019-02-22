@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2018/12/28 14:56:27 by gly              ###   ########.fr       */
+/*   Updated: 2019/02/22 14:52:22 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ t_ls	*ft_t_ls_new(void);
 
 void	ft_print_ls(t_ls *ls);
 int		ft_print_dir(t_lfile *dir, t_ls *ls);
-void		ft_print_lfile(t_lfile *file, unsigned char flag);
-void	ft_print_file_short(t_file *file);
-void	ft_print_file_long(t_file *file, unsigned char flag);
+int		ft_print_lfile(t_lfile *file, unsigned char flag);
+int		ft_print_file_short(t_file *file);
+int		ft_print_file_long(t_file *file, unsigned char flag);
 
-char	*ft_ls_time(time_t time);
+char	*ft_get_time(struct timespec file_timespec);
 
 t_lfile	*ft_dir_error(int n);
 
