@@ -6,11 +6,12 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 16:06:43 by gly               #+#    #+#             */
-/*   Updated: 2019/02/22 12:55:52 by gly              ###   ########.fr       */
+/*   Updated: 2019/02/22 16:46:59 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include <grp.h>
 
 char	*ft_filename(const char *filepath, unsigned char flag)
 {
@@ -38,8 +39,8 @@ void	ft_fill_file(t_file *elem, struct stat statbuf)
 	elem->size = statbuf.st_size;
 	elem->blksize = statbuf.st_blksize;
 	elem->blkcnt = statbuf.st_blocks;
-	elem->uid = statbuf.st_uid;
-	elem->gid = statbuf.st_gid;
+	elem->uid = getpwuid(statbuf.st_uid)->pw_name;
+	elem->gid = getgrgid(statbuf.st_gid)->gr_name;
 	elem->atim = statbuf.st_atimespec;
 	elem->mtim = statbuf.st_mtimespec;
 	elem->ctim = statbuf.st_ctimespec;

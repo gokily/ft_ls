@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2019/02/22 14:52:22 by gly              ###   ########.fr       */
+/*   Updated: 2019/02/22 16:45:27 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ typedef struct		s_file
 	char			*fullpath;
 	mode_t			mode;
 	nlink_t			nlink;
-	uid_t			uid;
-	gid_t			gid;
+	char			*uid;
+	char			*gid;
 	off_t			size;
 	blksize_t		blksize;
 	blkcnt_t		blkcnt;
