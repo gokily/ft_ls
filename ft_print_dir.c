@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:54 by gly               #+#    #+#             */
-/*   Updated: 2018/12/28 16:19:40 by gly              ###   ########.fr       */
+/*   Updated: 2019/03/04 16:41:01 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int			ft_print_dir(t_lfile *dir, t_ls *ls)
 	else
 		ft_putendl("");
 	if (ls->flag & SEVERAL)
-		//ft_printf("%s:\n", dir->file->fullpath);
 		printf("%s:\n", dir->file->fullpath);
 	if (ls->flag & LONG)
 		ft_print_dir_total(lfile);

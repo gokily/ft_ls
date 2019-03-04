@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2019/02/22 16:45:27 by gly              ###   ########.fr       */
+/*   Updated: 2019/03/04 16:16:13 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,16 @@ typedef	struct		s_ls
 	t_lfile			*ldir;
 }					t_ls;
 
+typedef struct		s_space
+{
+	int	one;
+	int	two;
+	int	three;
+	int	four;
+	int	five;
+}					t_space;
+
+
 t_ls				*ft_parsels(int ac, char **av);
 
 t_lfile	*ft_lfile_new(char *filepath, unsigned char flag);
@@ -77,7 +87,7 @@ void	ft_print_ls(t_ls *ls);
 int		ft_print_dir(t_lfile *dir, t_ls *ls);
 int		ft_print_lfile(t_lfile *file, unsigned char flag);
 int		ft_print_file_short(t_file *file);
-int		ft_print_file_long(t_file *file, unsigned char flag);
+int		ft_print_file_long(t_file *file, unsigned char flag, t_space space);
 
 char	*ft_get_time(struct timespec file_timespec);
 

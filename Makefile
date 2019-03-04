@@ -6,7 +6,7 @@
 #    By: gly <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/28 16:18:37 by gly               #+#    #+#              #
-#    Updated: 2019/02/22 13:58:11 by gly              ###   ########.fr        #
+#    Updated: 2019/02/22 15:59:43 by gly              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ RM		=	/bin/rm -f
 all		:	$(NAME)
 
 $(NAME)	:	$(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) ft_strjoin_three.c print_t_ls.c $(LIBFTFLAG) 
+	$(CC) $(CFLAGS) -g -o $(NAME) $(OBJ) ft_strjoin_three.c print_t_ls.c $(LIBFTFLAG) 
 	
 $(LIBFT) :
 	make -C libft

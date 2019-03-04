@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:30 by gly               #+#    #+#             */
-/*   Updated: 2018/12/28 14:52:48 by gly              ###   ########.fr       */
+/*   Updated: 2019/03/04 16:32:44 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,5 @@ int		main(int ac, char **av)
 	ls = ft_parsels(ac, av);
 	ft_lfile_sort(&ls->ldir, ls->flag);
 	ft_print_ls(ls);
-	print_t_ls(ls);
 	return (1);
 }
