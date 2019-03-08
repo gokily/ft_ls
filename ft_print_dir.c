@@ -6,20 +6,21 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:54 by gly               #+#    #+#             */
-/*   Updated: 2019/03/04 16:41:01 by gly              ###   ########.fr       */
+/*   Updated: 2019/03/08 11:06:05 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void		ft_print_dir_total(t_lfile *file)
+static void		ft_print_dir_total(t_lfile *file, t_ls *ls)
 {
 	unsigned int	size;
 
 	size = 0;
 	while (file)
 	{
-		size += file->file->blkcnt;
+		if ((ls->flag & ALL) || file->file->name[0] != '.')
+			size += file->file->blkcnt;
 		file = file->next;
 	}
 	printf("total %u\n", size);
@@ -70,7 +71,7 @@ int			ft_print_dir(t_lfile *dir, t_ls *ls)
 	if (ls->flag & SEVERAL)
 		printf("%s:\n", dir->file->fullpath);
 	if (ls->flag & LONG)
-		ft_print_dir_total(lfile);
+		ft_print_dir_total(lfile, ls);
 	ft_print_lfile(lfile, ls->flag);
 	if (ls->flag & REC)
 	{
@@ -78,7 +79,7 @@ int			ft_print_dir(t_lfile *dir, t_ls *ls)
 		{
 			file = lfile->file;
 			if (S_ISDIR(file->mode) && ft_strcmp(file->name, ".") &&
-				ft_strcmp(file->name, ".."))
+					ft_strcmp(file->name, ".."))
 			{
 				if(!(ft_print_dir(lfile, ls)))
 					return (0);
