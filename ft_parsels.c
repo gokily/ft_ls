@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:16 by gly               #+#    #+#             */
-/*   Updated: 2018/12/28 14:52:18 by gly              ###   ########.fr       */
+/*   Updated: 2019/03/08 11:14:39 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,21 @@ t_ls	*ft_parsels(int ac, char **av)
 {
 	t_ls	*ls;
 	int		i;
+	int		flag;
 
 	if(!(ls = ft_t_ls_new()))
 		return (NULL);
 	i = 1;
+	flag = 0;
 	while (i < ac)
 	{
-		if (av[i][0] == '-')
+		if (flag == 0 && av[i][0] == '-')
 			ls = ft_parseflag(av[i], ls);
 		else
 		{
 			if (!(ls = ft_parsedir(av[i], ls)))
 				return (NULL);
+			flag = 1;
 		}
 		i++;
 	}
