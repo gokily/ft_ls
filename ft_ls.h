@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2019/03/04 16:16:13 by gly              ###   ########.fr       */
+/*   Updated: 2019/03/08 14:26:12 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define MTIM 1 << 4
 # define SEVERAL 1 << 5
 # define LSARG 1
+# define BUFFSIZE 1024
 
 typedef struct		s_file
 {
@@ -45,6 +46,8 @@ typedef struct		s_file
 	off_t			size;
 	blksize_t		blksize;
 	blkcnt_t		blkcnt;
+	dev_t			rdev;
+	char			*link;
 	struct timespec	atim;
 	struct timespec	mtim;
 	struct timespec	ctim;

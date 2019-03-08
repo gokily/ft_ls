@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 16:06:43 by gly               #+#    #+#             */
-/*   Updated: 2019/02/22 16:46:59 by gly              ###   ########.fr       */
+/*   Updated: 2019/03/08 15:08:37 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	ft_fill_file(t_file *elem, struct stat statbuf)
 	elem->atim = statbuf.st_atimespec;
 	elem->mtim = statbuf.st_mtimespec;
 	elem->ctim = statbuf.st_ctimespec;
+	elem->rdev = statbuf.st_rdev;
+	elem->link = NULL;
 }
 
 t_lfile	*ft_lfile_new(char *filepath, unsigned char flag)
@@ -52,6 +54,7 @@ t_lfile	*ft_lfile_new(char *filepath, unsigned char flag)
 	struct stat	statbuf;
 	char		*name;
 	t_file		*file;
+	char		*link;
 
 	if (!(elem = malloc(sizeof(t_lfile))))
 		return (NULL);
@@ -67,6 +70,13 @@ t_lfile	*ft_lfile_new(char *filepath, unsigned char flag)
 	file->name = name;
 	file->fullpath = filepath;
 	ft_fill_file(file, statbuf);
+	if (S_ISLNK(statbuf.st_mode))
+	{
+		if (!(link = ft_strnew(BUFFSIZE)))
+			return (NULL);
+		readlink(filepath, link, BUFFSIZE);
+		file->link = link;
+	}
 	elem->next = NULL;
 	return (elem);
 }
@@ -88,6 +98,11 @@ void	ft_lfile_push(t_lfile **lst, t_lfile *elem)
 	tmp->next = elem;
 	return ;
 }
+void	ft_freenull(void *tmp)
+{
+	free(tmp);
+	tmp = NULL;
+}
 
 void	ft_lfile_delall(t_lfile *lfile)
 {
@@ -99,9 +114,10 @@ void	ft_lfile_delall(t_lfile *lfile)
 	{
 		elem = lfile->next;
 		file = lfile->file;
-		free(file->name);
-		free(file->fullpath);
-		free(file);
-		free(lfile);
+		ft_freenull(file->name);
+		ft_freenull(file->fullpath);
+		ft_freenull(file->link);
+		ft_freenull(file);
+		ft_freenull(lfile);
 	}	
 }

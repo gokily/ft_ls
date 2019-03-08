@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:48:59 by gly               #+#    #+#             */
-/*   Updated: 2019/03/04 16:31:57 by gly              ###   ########.fr       */
+/*   Updated: 2019/03/08 14:26:55 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ int		ft_print_file_long(t_file *file, unsigned char flag, t_space space)
 	printf("%*u ", space.one, (unsigned int)file->nlink);
 	printf("%-*s  %-*s  ", space.two, file->uid, space.three, file->gid);
 	printf("%*u ", space.four, (unsigned int)file->size);
-	printf("%s %s\n", time_str, file->name);
+	printf("%s %s", time_str, file->name);
+	if (S_ISLNK(file->mode))
+		printf(" -> %s", file->link);
+	printf("\n");
 	free(time_str);
 	return (1);
 }
