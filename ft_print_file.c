@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:52:35 by gly               #+#    #+#             */
-/*   Updated: 2019/03/04 16:31:10 by gly              ###   ########.fr       */
+/*   Updated: 2019/03/08 15:39:29 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ t_space		ft_calculate_space(t_lfile *file, unsigned char flag)
 	t_lfile	*elem;
 
 	elem = file;
+	space.four_a = 0;
+	space.four_b = 0;
 	n = 0;
 	while (file != NULL)
 	{
@@ -72,12 +74,22 @@ t_space		ft_calculate_space(t_lfile *file, unsigned char flag)
 	{
 		if ((flag & ALL) || file->file->name[0] != '.')
 		{
+			if (S_ISCHR(file->file->mode) || S_ISBLK(file->file->mode))
+			{
+				space.four_a = space.four_a >
+					(int)ft_ulllen_base(major(file->file->rdev), 10) ?
+					space.four_a : (int)ft_ulllen_base(major(file->file->rdev), 10);
+				space.four_b = space.four_b >
+					(int)ft_ulllen_base(minor(file->file->rdev), 10) ?
+					space.four_b : (int)ft_ulllen_base(minor(file->file->rdev), 10);
+			}
 			tmp = ft_ulllen_base(file->file->size, 10);
 			n = n > tmp ? n : tmp; 
 		}
 		file = file->next;
 	}
-	space.four = n;
+	space.four_c = space.four_a + space.four_b + 2 > n ?
+		space.four_a + space.four_b + 2 : n;
 	return (space);
 }
 

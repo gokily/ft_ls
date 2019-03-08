@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2019/03/08 14:26:12 by gly              ###   ########.fr       */
+/*   Updated: 2019/03/08 15:18:27 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ typedef struct		s_space
 	int	one;
 	int	two;
 	int	three;
-	int	four;
-	int	five;
+	int	four_a;
+	int	four_b;
+	int	four_c;
 }					t_space;
 
 
