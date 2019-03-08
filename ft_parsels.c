@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:16 by gly               #+#    #+#             */
-/*   Updated: 2019/03/08 11:14:39 by gly              ###   ########.fr       */
+/*   Updated: 2019/03/08 11:32:59 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ t_ls	*ft_parseflag(char *flag, t_ls *ls)
 		if (*flag == 'l')
 			ls->flag |= LONG;
 		else if (*flag == 'R')
-		{
 			ls->flag |= REC;
-			ls->flag |= SEVERAL;
-		}
 		else if (*flag == 'a')
 			ls->flag |= ALL;
 		else if (*flag == 'r')

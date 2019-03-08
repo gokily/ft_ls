@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:54 by gly               #+#    #+#             */
-/*   Updated: 2019/03/08 11:06:05 by gly              ###   ########.fr       */
+/*   Updated: 2019/03/08 11:47:02 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,21 @@
 static void		ft_print_dir_total(t_lfile *file, t_ls *ls)
 {
 	unsigned int	size;
+	int				flag;
 
 	size = 0;
+	flag = 0;
 	while (file)
 	{
 		if ((ls->flag & ALL) || file->file->name[0] != '.')
+		{
+			flag = 1;
 			size += file->file->blkcnt;
+		}
 		file = file->next;
 	}
-	printf("total %u\n", size);
-	//ft_printf("total %u\n", size);
+	if (flag)
+		printf("total %u\n", size);
 	return ;
 }
 
@@ -59,7 +64,6 @@ int			ft_print_dir(t_lfile *dir, t_ls *ls)
 {
 	static int	first = 1;
 	t_lfile		*lfile;
-	t_file		*file;
 
 	if (!(lfile = ft_getfile_in_dir(dir)))
 		return (0);
@@ -70,6 +74,8 @@ int			ft_print_dir(t_lfile *dir, t_ls *ls)
 		ft_putendl("");
 	if (ls->flag & SEVERAL)
 		printf("%s:\n", dir->file->fullpath);
+	if (ls->flag & REC)
+		ls->flag |= SEVERAL;
 	if (ls->flag & LONG)
 		ft_print_dir_total(lfile, ls);
 	ft_print_lfile(lfile, ls->flag);
@@ -77,13 +83,10 @@ int			ft_print_dir(t_lfile *dir, t_ls *ls)
 	{
 		while (lfile != NULL)
 		{
-			file = lfile->file;
-			if (S_ISDIR(file->mode) && ft_strcmp(file->name, ".") &&
-					ft_strcmp(file->name, ".."))
-			{
+			if (S_ISDIR(lfile->file->mode) &&
+					((ls->flag & ALL) || lfile->file->name[0] != '.'))
 				if(!(ft_print_dir(lfile, ls)))
 					return (0);
-			}
 			lfile = lfile->next;
 		}
 	}
