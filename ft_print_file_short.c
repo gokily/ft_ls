@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 16:38:39 by gly               #+#    #+#             */
-/*   Updated: 2019/04/01 13:39:38 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/01 14:37:30 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,12 @@ int		ft_print_lfile_short(t_lfile *file)
 	while (k < nrow)
 	{
 		file = head;
-		printf("%s%-*s" COLRESET, file->file->col, linfo.maxl + 1, file->file->name);
 		i = 1;
-		while (i < ncol)
+		while (i <= ncol)
 		{
 			j = 0;
+				printf("%s%-*s" COLRESET, file->file->col, linfo.maxl + 1,
+						file->file->name);
 			while (j < nrow)
 			{
 				file = file->next;
@@ -76,9 +77,6 @@ int		ft_print_lfile_short(t_lfile *file)
 				}
 				j++;
 			}
-			if (j == nrow)
-				printf("%s%-*s" COLRESET, file->file->col, linfo.maxl + 1,
-						file->file->name);
 			i++;
 		}
 		printf("\n");
