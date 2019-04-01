@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 16:18:29 by gly               #+#    #+#             */
-/*   Updated: 2018/12/28 16:33:13 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/01 14:16:13 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,20 @@ static int	ft_compare_name(t_file *current, t_file *next)
 	return (ft_strcmp(current->name, next->name));
 }
 
-static int ft_lfile_rev(t_lfile **lfile)
+static void ft_lfile_rev(t_lfile **lfile)
 {
 	t_lfile *head;
-	t_lfile	*tail;
-	t_lfile	*swim;
-	t_file	*tmp;
+	t_lfile	*rest;
 	
 	head = *lfile;
-	tail = head;
-	while (tail != NULL)
-		tail = tail->next;
-	while (!(head == tail || tail->next == head))
+	rest = head->next;
+	if (rest != NULL)
 	{
-		tmp = head->file;
-		head->file = tail->file;
-		tail->file = tmp;
-		swim = head;
-		while (swim->next != tail)
-			swim = swim->next;
-		head = head->next;
-		tail = swim;
+		*lfile = rest;
+		ft_lfile_rev(lfile);
+		head->next->next = head;
+		head->next = NULL;
 	}
-	return (1);
 }
 
 static void	ft_lfile_sort2(t_lfile **lfile, int (*cmp)(t_file *, t_file *))
@@ -78,6 +69,7 @@ static void	ft_lfile_sort2(t_lfile **lfile, int (*cmp)(t_file *, t_file *))
 	*lfile = start;
 }
 
+		
 void		ft_lfile_sort(t_lfile **lfile, unsigned char flag)
 {
 	if (*lfile == NULL || (*lfile)->next == NULL)
