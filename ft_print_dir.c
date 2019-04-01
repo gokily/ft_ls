@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:54 by gly               #+#    #+#             */
-/*   Updated: 2019/03/08 11:47:02 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/01 14:03:44 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void		ft_print_dir_total(t_lfile *file, t_ls *ls)
 	return ;
 }
 
-static t_lfile	*ft_getfile_in_dir(t_lfile *ldir)
+static t_lfile	*ft_getfile_in_dir(t_lfile *ldir, unsigned char flag)
 {
 	DIR				*dir;
 	struct dirent	*elem;
@@ -46,14 +46,17 @@ static t_lfile	*ft_getfile_in_dir(t_lfile *ldir)
 		return (ft_dir_error(1));
 	while ((elem = readdir(dir)))
 	{
-		fullpath = ft_strjoin_three(ldir->file->fullpath, "/", elem->d_name);
-		if (!fullpath || !(lst_elem = ft_lfile_new(fullpath, 0)))
+		if (flag & ALL || elem->d_name[0] != '.')
 		{
-			closedir(dir);
-			ft_lfile_delall(lfile);
-			return (ft_dir_error(2));
+			fullpath = ft_strjoin_three(ldir->file->fullpath, "/", elem->d_name);
+			if (!fullpath || !(lst_elem = ft_lfile_new(fullpath, 0)))
+			{
+				closedir(dir);
+				ft_lfile_delall(lfile);
+				return (ft_dir_error(2));
+			}
+			ft_lfile_push(&lfile, lst_elem);
 		}
-		ft_lfile_push(&lfile, lst_elem);
 	}
 	closedir(dir);
 	return (lfile);
@@ -65,7 +68,7 @@ int			ft_print_dir(t_lfile *dir, t_ls *ls)
 	static int	first = 1;
 	t_lfile		*lfile;
 
-	if (!(lfile = ft_getfile_in_dir(dir)))
+	if (!(lfile = ft_getfile_in_dir(dir, ls->flag)))
 		return (0);
 	ft_lfile_sort(&lfile, ls->flag);
 	if (first == 1)
@@ -84,7 +87,9 @@ int			ft_print_dir(t_lfile *dir, t_ls *ls)
 		while (lfile != NULL)
 		{
 			if (S_ISDIR(lfile->file->mode) &&
-					((ls->flag & ALL) || lfile->file->name[0] != '.'))
+					(((ls->flag & ALL) && ft_strcmp(lfile->file->name, ".") && 
+					  ft_strcmp(lfile->file->name, "..")) ||
+					 lfile->file->name[0] != '.'))
 				if(!(ft_print_dir(lfile, ls)))
 					return (0);
 			lfile = lfile->next;
