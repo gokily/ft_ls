@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2019/04/01 12:00:25 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/01 14:45:54 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_space	ft_calculate_space(t_lfile *file, unsigned char flag);
 
 char	*ft_get_time(struct timespec file_timespec);
 
-t_lfile	*ft_dir_error(int n);
+int		ft_dir_error(int n);
 
 //libft
 char	*ft_strjoin_three(char *first, char *second, char *third);

@@ -6,42 +6,36 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:54 by gly               #+#    #+#             */
-/*   Updated: 2019/04/01 14:03:44 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/01 14:50:48 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void		ft_print_dir_total(t_lfile *file, t_ls *ls)
+static void		ft_print_dir_total(t_lfile *file)
 {
 	unsigned int	size;
-	int				flag;
 
+	if (file == NULL)
+		return ;
 	size = 0;
-	flag = 0;
 	while (file)
 	{
-		if ((ls->flag & ALL) || file->file->name[0] != '.')
-		{
-			flag = 1;
-			size += file->file->blkcnt;
-		}
+		size += file->file->blkcnt;
 		file = file->next;
 	}
-	if (flag)
-		printf("total %u\n", size);
+	printf("total %u\n", size);
 	return ;
 }
 
-static t_lfile	*ft_getfile_in_dir(t_lfile *ldir, unsigned char flag)
+static int		ft_getfile_in_dir(t_lfile *ldir, unsigned char flag,
+		t_lfile **lfile)
 {
 	DIR				*dir;
 	struct dirent	*elem;
 	char			*fullpath;
 	t_lfile			*lst_elem;
-	t_lfile			*lfile;
 
-	lfile = NULL;
 	if (!(dir = opendir(ldir->file->fullpath)))
 		return (ft_dir_error(1));
 	while ((elem = readdir(dir)))
@@ -52,14 +46,14 @@ static t_lfile	*ft_getfile_in_dir(t_lfile *ldir, unsigned char flag)
 			if (!fullpath || !(lst_elem = ft_lfile_new(fullpath, 0)))
 			{
 				closedir(dir);
-				ft_lfile_delall(lfile);
+				ft_lfile_delall(*lfile);
 				return (ft_dir_error(2));
 			}
-			ft_lfile_push(&lfile, lst_elem);
+			ft_lfile_push(lfile, lst_elem);
 		}
 	}
 	closedir(dir);
-	return (lfile);
+	return (1);
 }
 
 //La fonciton recursive
@@ -68,7 +62,8 @@ int			ft_print_dir(t_lfile *dir, t_ls *ls)
 	static int	first = 1;
 	t_lfile		*lfile;
 
-	if (!(lfile = ft_getfile_in_dir(dir, ls->flag)))
+	lfile = NULL;
+	if (!(ft_getfile_in_dir(dir, ls->flag, &lfile)))
 		return (0);
 	ft_lfile_sort(&lfile, ls->flag);
 	if (first == 1)
@@ -80,16 +75,14 @@ int			ft_print_dir(t_lfile *dir, t_ls *ls)
 	if (ls->flag & REC)
 		ls->flag |= SEVERAL;
 	if (ls->flag & LONG)
-		ft_print_dir_total(lfile, ls);
+		ft_print_dir_total(lfile);
 	ft_print_lfile(lfile, ls->flag);
 	if (ls->flag & REC)
 	{
 		while (lfile != NULL)
 		{
-			if (S_ISDIR(lfile->file->mode) &&
-					(((ls->flag & ALL) && ft_strcmp(lfile->file->name, ".") && 
-					  ft_strcmp(lfile->file->name, "..")) ||
-					 lfile->file->name[0] != '.'))
+			if (S_ISDIR(lfile->file->mode) && ft_strcmp(lfile->file->name, ".") && 
+					ft_strcmp(lfile->file->name, ".."))
 				if(!(ft_print_dir(lfile, ls)))
 					return (0);
 			lfile = lfile->next;
