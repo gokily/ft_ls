@@ -6,19 +6,11 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:52:35 by gly               #+#    #+#             */
-/*   Updated: 2019/03/08 15:39:29 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/01 13:50:36 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-static int	ft_print_file(t_file *file, unsigned char flag, t_space space)
-{
-	if (flag & LONG)
-		return (ft_print_file_long(file, flag, space));
-	else
-		return (ft_print_file_short(file));
-}
 
 t_space		ft_calculate_space(t_lfile *file, unsigned char flag)
 {
@@ -98,17 +90,11 @@ t_space		ft_calculate_space(t_lfile *file, unsigned char flag)
 // need to change the location of function in the c files.
 int			ft_print_lfile(t_lfile *file, unsigned char flag)
 {
-	t_space		space;
-		
-	space = ft_calculate_space(file, flag);
-	while (file != NULL)
-	{
-		if ((flag & ALL) || file->file->name[0] != '.')
-		{
-			if (!(ft_print_file(file->file, flag, space)))
-				return (0);
-		}
-		file = file->next;
-	}
+	if (file == NULL)
+	return (1);	
+	if (flag & LONG)
+		ft_print_lfile_long(file, flag);
+	else
+		ft_print_lfile_short(file);
 	return (1);
 }

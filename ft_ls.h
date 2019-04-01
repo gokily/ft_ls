@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2019/03/08 15:18:27 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/01 12:00:25 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,15 @@
 # define SEVERAL 1 << 5
 # define LSARG 1
 # define BUFFSIZE 1024
+#define COL_RED     "\x1b[31m"
+#define COL_GREEN   "\x1b[32m"
+#define COL_YELLOW  "\x1b[33m"
+#define BG_YELLOW  "\x1b[43m"
+#define COL_BLUE    "\x1b[34m"
+#define COL_MAGENTA "\x1b[35m"
+#define COL_CYAN "\x1b[96m"
+#define BG_CYAN "\x1b[46m"
+#define COLRESET   "\x1b[0m"
 
 typedef struct		s_file
 {
@@ -51,6 +60,9 @@ typedef struct		s_file
 	struct timespec	atim;
 	struct timespec	mtim;
 	struct timespec	ctim;
+	int				ext;
+	int				acl;
+	char			*col;
 }					t_file;
 
 typedef struct		s_lfile
@@ -58,6 +70,12 @@ typedef struct		s_lfile
 	t_file			*file;	
 	struct s_lfile	*next;
 }					t_lfile;
+
+typedef	struct		s_linfo
+{
+	int				maxl;
+	int				nb;
+}					t_linfo;
 
 typedef	struct		s_ls
 {
@@ -90,8 +108,9 @@ t_ls	*ft_t_ls_new(void);
 void	ft_print_ls(t_ls *ls);
 int		ft_print_dir(t_lfile *dir, t_ls *ls);
 int		ft_print_lfile(t_lfile *file, unsigned char flag);
-int		ft_print_file_short(t_file *file);
-int		ft_print_file_long(t_file *file, unsigned char flag, t_space space);
+int		ft_print_lfile_short(t_lfile *file);
+int		ft_print_lfile_long(t_lfile *file, unsigned char flag);
+t_space	ft_calculate_space(t_lfile *file, unsigned char flag);
 
 char	*ft_get_time(struct timespec file_timespec);
 

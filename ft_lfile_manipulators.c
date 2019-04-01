@@ -6,12 +6,14 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 16:06:43 by gly               #+#    #+#             */
-/*   Updated: 2019/03/08 15:08:37 by gly              ###   ########.fr       */
+/*   Updated: 2019/03/21 12:43:25 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include <grp.h>
+#include <sys/xattr.h>
+#include <sys/acl.h>
 
 char	*ft_filename(const char *filepath, unsigned char flag)
 {
@@ -30,6 +32,26 @@ char	*ft_filename(const char *filepath, unsigned char flag)
 			return (NULL);
 	}
 	return (name);
+}
+
+t_file	*ft_set_col(t_file *elem)
+{
+	if (S_ISDIR(elem->mode))
+		elem->col = ft_strdup(COL_CYAN);
+	else if (S_ISLNK(elem->mode))
+		elem->col = ft_strdup(COL_MAGENTA);
+	else if (S_ISBLK(elem->mode))
+		elem->col = ft_strdup(COL_BLUE BG_CYAN);
+	else if (S_ISCHR(elem->mode))
+		elem->col = ft_strdup(COL_BLUE BG_YELLOW);
+	else if (elem->mode & S_IXUSR)
+		elem->col = ft_strdup(COL_RED);
+	else
+		elem->col = ft_strdup(COLRESET);
+	if (elem->col == NULL)
+		return (NULL);
+	else
+		return (elem);
 }
 
 void	ft_fill_file(t_file *elem, struct stat statbuf)
@@ -52,24 +74,29 @@ t_lfile	*ft_lfile_new(char *filepath, unsigned char flag)
 {
 	t_lfile		*elem;
 	struct stat	statbuf;
-	char		*name;
 	t_file		*file;
 	char		*link;
+	char		namebuf[BUFFSIZE];
+	acl_t acl;
+	//	acl_entry_t dummy;
 
-	if (!(elem = malloc(sizeof(t_lfile))))
+	if (!(elem = malloc(sizeof(t_lfile))) || !(file = malloc(sizeof(t_file))))
 		return (NULL);
+	elem->file = file;
 	lstat(filepath, &statbuf);//comment traiter les erreurs de file (acces ou autre)?
-	if (!(name = ft_filename(filepath, flag)))
+	if (!(file->name = ft_filename(filepath, flag)))
 	{
 		free(elem);
 		return (NULL);
 	}
-	if (!(file = malloc(sizeof(t_file))))
-		return (NULL);
-	elem->file = file;
-	file->name = name;
+	file->ext = listxattr(filepath, namebuf, BUFFSIZE, 0) > 0 ? 1 : 0;
+	acl = NULL;
+	acl = acl_get_link_np(filepath, ACL_TYPE_EXTENDED);
+	file->acl = acl == NULL ? 0 : 1;
+	acl_free(acl);
 	file->fullpath = filepath;
 	ft_fill_file(file, statbuf);
+	ft_set_col(file);
 	if (S_ISLNK(statbuf.st_mode))
 	{
 		if (!(link = ft_strnew(BUFFSIZE)))

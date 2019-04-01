@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:48:59 by gly               #+#    #+#             */
-/*   Updated: 2019/03/08 15:31:11 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/01 10:58:49 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,19 @@ int		ft_print_file_long(t_file *file, unsigned char flag, t_space space)
 {
 	char	*perms;
 	char	*time_str;
+	char	ext;
 
 	perms = ft_lsperms(file->mode);
 	(void)flag;
+	if (file->ext == 1)
+		ext = '@';
+	else if (file->acl == 1)
+		ext = '+';
+	else
+		ext = ' ';
 	if (!(time_str = ft_get_time(file->mtim)))
 		return (0);
-	printf("%s  ", perms);
+	printf("%s%c ", perms, ext);
 	printf("%*u ", space.one, (unsigned int)file->nlink);
 	printf("%-*s  %-*s  ", space.two, file->uid, space.three, file->gid);
 	if (S_ISCHR(file->mode) || S_ISBLK(file->mode))
@@ -76,10 +83,28 @@ int		ft_print_file_long(t_file *file, unsigned char flag, t_space space)
 	}
 	else
 		printf("%*u ", space.four_c, (unsigned int)file->size);
-	printf("%s %s", time_str, file->name);
+	printf("%s %s%s" COLRESET, time_str, file->col, file->name);
 	if (S_ISLNK(file->mode))
 		printf(" -> %s", file->link);
 	printf("\n");
 	free(time_str);
 	return (1);
 }
+
+int		ft_print_lfile_long(t_lfile *file, unsigned char flag)
+{
+	t_space	space;
+
+	space = ft_calculate_space(file, flag);
+	while (file != NULL)
+	{
+		if ((flag & ALL) || file->file->name[0] != '.')
+		{
+			if (!(ft_print_file_long(file->file, flag, space)))
+				return (0);
+		}
+		file = file->next;
+	}
+	return (1);
+}
+
