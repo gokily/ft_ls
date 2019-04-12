@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndupfree.c                                   :+:      :+:    :+:   */
+/*   ft_round_double.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/27 16:24:03 by gly               #+#    #+#             */
-/*   Updated: 2018/12/20 13:04:12 by gly              ###   ########.fr       */
+/*   Created: 2018/12/03 11:40:13 by gly               #+#    #+#             */
+/*   Updated: 2019/03/15 13:28:17 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <string.h>
 
-char	*ft_strndupfree(char *str, size_t len)
+long double	ft_round_double(long double nb, size_t acc)
 {
-	size_t	i;
-	char	*ret;
+	size_t		i;
+	long double	tmp;
 
 	i = 0;
-	if (!(ret = malloc(sizeof(char) * (len + 1))))
-		return (NULL);
-	while (i < len)
+	tmp = nb;
+	while (i < acc)
 	{
-		ret[i] = str[i];
+		tmp *= 10;
+		tmp = tmp - (long long)tmp;
 		i++;
 	}
-	ret[i] = '\0';
-	free(str);
-	return (ret);
+	if (tmp < 0.5 && tmp > -0.5)
+		return (nb);
+	tmp = nb >= 0 ? 1 : -1;
+	i = 0;
+	while (i < acc)
+	{
+		tmp = (long double)tmp / 10;
+		i++;
+	}
+	return (tmp + nb);
 }

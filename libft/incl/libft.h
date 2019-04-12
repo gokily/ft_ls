@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 14:29:36 by gly               #+#    #+#             */
-/*   Updated: 2018/12/20 13:20:52 by gly              ###   ########.fr       */
+/*   Updated: 2019/03/21 16:28:05 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char				*ft_strsub(const char *s, unsigned int start, size_t len);
 char				*ft_strjoin(const char *s1, const char *s2);
 char				*ft_strtrim(const char *s);
 char				**ft_strsplit(const char *s, char c);
+int					ft_free_strtab(char **tab);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_atoi(const char *str);
@@ -106,6 +107,10 @@ char				*ft_size_t2a_base(size_t nb, char *base);
 char				*ft_ull2a_base(unsigned long long n, char *base);
 long long			ft_intpart_double(long double nb);
 long double			ft_round_double(long double nb, size_t acc);
+
+void				ft_sort_inttab(int *tab, int n);
+int					ft_int_is_bigger(int first, int second);
+int					ft_int_is_smaller(int first, int second);
 
 int					get_next_line(const int fd, char **line);
 
