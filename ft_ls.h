@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2019/04/01 14:45:54 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/12 15:26:55 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@
 #include <fcntl.h>
 #include <pwd.h>
 #include <time.h>
-#include "libft/libft.h"
+#include "libft/incl/libft.h"
+#include "libft/incl/ft_printf.h"
 
 #include <stdio.h>
 
-# define LONG 1
+# define LNG 1
 # define REC 1 << 1
 # define ALL 1 << 2
 # define REV 1 << 3

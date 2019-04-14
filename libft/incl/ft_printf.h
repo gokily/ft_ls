@@ -16,8 +16,6 @@
 #define BUFFSIZE 1024
 # include <stdarg.h>
 
-# include <stdio.h>
-
 # define FLAG " -+#*.0123456789lhLjzt"
 # define CONV "cspdiobuxXfF%"
 # define PLUS 1

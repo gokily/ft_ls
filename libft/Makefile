@@ -52,8 +52,8 @@ SRC_FPF = \
 	ft_unsigned_common.c	\
 	ft_util.c	\
 
-SRC_INTEGER_PATH = int/
-SRC_INTEGER = \
+SRC_INT_PATH = int/
+SRC_INT = \
 	ft_atoi.c \
 	ft_convertbase.c \
 	ft_int_comparators.c \
@@ -155,7 +155,7 @@ auteur:
 	echo $(AUTHOR) > auteur
 
 clean :
-	/bin/rm -f $(OBJ_PATH)
+	/bin/rm -drf $(OBJ_PATH)
 
 fclean : clean
 	/bin/rm -f $(NAME)

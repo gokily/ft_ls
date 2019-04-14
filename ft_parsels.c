@@ -6,30 +6,33 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:16 by gly               #+#    #+#             */
-/*   Updated: 2019/03/08 11:32:59 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/12 15:58:16 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_ls	*ft_parsedir(char *dirpath, t_ls *ls)
+static inline t_ls	*ft_parsedir(char *dirpath, t_ls *ls)
 {
 	t_lfile	*elem;
+	char	*path;
 
-	if (!(elem = ft_lfile_new(dirpath, LSARG)))
+	if (!(path = ft_strdup(dirpath)))
+		return (NULL);
+	if (!(elem = ft_lfile_new(path, LSARG)))
 		return (NULL);
 	ft_lfile_push(&ls->ldir, elem);
 	ls->nbdir++;
 	return (ls);
 }
 
-t_ls	*ft_parseflag(char *flag, t_ls *ls)
+static inline t_ls	*ft_parseflag(char *flag, t_ls *ls)
 {
 	flag++;
 	while (*flag != '\0')
 	{
 		if (*flag == 'l')
-			ls->flag |= LONG;
+			ls->flag |= LNG;
 		else if (*flag == 'R')
 			ls->flag |= REC;
 		else if (*flag == 'a')
@@ -43,7 +46,7 @@ t_ls	*ft_parseflag(char *flag, t_ls *ls)
 	return (ls);
 }
 
-t_ls	*ft_parsels(int ac, char **av)
+t_ls			*ft_parsels(int ac, char **av)
 {
 	t_ls	*ls;
 	int		i;

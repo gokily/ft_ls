@@ -6,7 +6,7 @@
 #    By: gly <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/28 16:18:37 by gly               #+#    #+#              #
-#    Updated: 2019/02/22 15:59:43 by gly              ###   ########.fr        #
+#    Updated: 2019/04/12 15:29:54 by gly              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,10 +48,11 @@ $(LIBFT) :
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean	:
+	make -C libft clean
 	$(RM) $(OBJ)
 
 fclean	:	clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(LIBFT)
 
 re		: fclean all
 

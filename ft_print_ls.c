@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:30 by gly               #+#    #+#             */
-/*   Updated: 2019/03/04 16:32:44 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/12 16:12:13 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@ void	ft_print_ls(t_ls *ls)
 	return ;
 }
 
+void	ft_freels(t_ls *ls)
+{
+	t_lfile	*ldir;
+
+	ldir = ls->ldir;
+	ft_lfile_delall(ldir);
+	free(ls);
+	ls = NULL;
+}
+
 int		main(int ac, char **av)
 {
 	t_ls		*ls;
@@ -35,5 +45,6 @@ int		main(int ac, char **av)
 	ls = ft_parsels(ac, av);
 	ft_lfile_sort(&ls->ldir, ls->flag);
 	ft_print_ls(ls);
+	ft_freels(ls);
 	return (1);
 }

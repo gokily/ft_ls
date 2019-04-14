@@ -92,7 +92,7 @@ int			ft_print_lfile(t_lfile *file, unsigned char flag)
 {
 	if (file == NULL)
 	return (1);	
-	if (flag & LONG)
+	if (flag & LNG)
 		ft_print_lfile_long(file, flag);
 	else
 		ft_print_lfile_short(file);

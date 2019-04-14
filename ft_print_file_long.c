@@ -72,21 +72,21 @@ int		ft_print_file_long(t_file *file, unsigned char flag, t_space space)
 		ext = ' ';
 	if (!(time_str = ft_get_time(file->mtim)))
 		return (0);
-	printf("%s%c ", perms, ext);
-	printf("%*u ", space.one, (unsigned int)file->nlink);
-	printf("%-*s  %-*s  ", space.two, file->uid, space.three, file->gid);
+	ft_printf("%s%c ", perms, ext);
+	ft_printf("%*u ", space.one, (unsigned int)file->nlink);
+	ft_printf("%-*s  %-*s  ", space.two, file->uid, space.three, file->gid);
 	if (S_ISCHR(file->mode) || S_ISBLK(file->mode))
 	{
-		printf("%*u, %*u ", space.four_c - space.four_b - 2,
+		ft_printf("%*u, %*u ", space.four_c - space.four_b - 2,
 				(unsigned int)major(file->rdev), space.four_b,
 				(unsigned int)minor(file->rdev));
 	}
 	else
-		printf("%*u ", space.four_c, (unsigned int)file->size);
-	printf("%s %s%s" COLRESET, time_str, file->col, file->name);
+		ft_printf("%*u ", space.four_c, (unsigned int)file->size);
+	ft_printf("%s %s%s" COLRESET, time_str, file->col, file->name);
 	if (S_ISLNK(file->mode))
-		printf(" -> %s", file->link);
-	printf("\n");
+		ft_printf(" -> %s", file->link);
+	ft_printf("\n");
 	free(time_str);
 	return (1);
 }

@@ -65,7 +65,7 @@ int		ft_print_lfile_short(t_lfile *file)
 		while (i <= ncol)
 		{
 			j = 0;
-				printf("%s%-*s" COLRESET, file->file->col, linfo.maxl + 1,
+				ft_printf("%s%-*s" COLRESET, file->file->col, linfo.maxl + 1,
 						file->file->name);
 			while (j < nrow)
 			{
@@ -79,7 +79,7 @@ int		ft_print_lfile_short(t_lfile *file)
 			}
 			i++;
 		}
-		printf("\n");
+		ft_printf("\n");
 		head = head->next;
 		k++;
 	}

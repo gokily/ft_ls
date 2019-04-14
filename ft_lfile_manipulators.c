@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 16:06:43 by gly               #+#    #+#             */
-/*   Updated: 2019/03/21 12:43:25 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/14 14:06:17 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ void	ft_lfile_push(t_lfile **lst, t_lfile *elem)
 	tmp->next = elem;
 	return ;
 }
+
 void	ft_freenull(void *tmp)
 {
 	free(tmp);
@@ -139,11 +140,13 @@ void	ft_lfile_delall(t_lfile *lfile)
 	elem = lfile;
 	while (elem != NULL)
 	{
-		elem = lfile->next;
+		lfile = elem;
+		elem = elem->next;			
 		file = lfile->file;
 		ft_freenull(file->name);
 		ft_freenull(file->fullpath);
 		ft_freenull(file->link);
+		ft_freenull(file->col);
 		ft_freenull(file);
 		ft_freenull(lfile);
 	}	
