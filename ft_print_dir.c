@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:54 by gly               #+#    #+#             */
-/*   Updated: 2019/04/14 13:55:46 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/14 15:13:46 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ static int		ft_getfile_in_dir(t_lfile *ldir, unsigned char flag,
 	char			*fullpath;
 	t_lfile			*lst_elem;
 
+	if (!(S_ISDIR(ldir->file->mode)))
+	{
+		ft_putendl(ldir->file->fullpath);
+		return (0);
+	}
 	if (!(dir = opendir(ldir->file->fullpath)))
 		return (ft_dir_error(1));
 	while ((elem = readdir(dir)))
@@ -64,13 +69,13 @@ int			ft_print_dir(t_lfile *dir, t_ls *ls)
 	t_lfile		*tmp;
 
 	lfile = NULL;
-	if (!(ft_getfile_in_dir(dir, ls->flag, &lfile)))
-		return (0);
-	ft_lfile_sort(&lfile, ls->flag);
 	if (first == 1)
 		first = 0;
 	else
 		ft_putendl("");
+	if (!(ft_getfile_in_dir(dir, ls->flag, &lfile)))
+		return (0);
+	ft_lfile_sort(&lfile, ls->flag);
 	if (ls->flag & SEVERAL)
 		ft_printf("%s:\n", dir->file->fullpath);
 	if (ls->flag & REC)
