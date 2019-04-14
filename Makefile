@@ -6,10 +6,11 @@
 #    By: gly <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/28 16:18:37 by gly               #+#    #+#              #
-#    Updated: 2019/04/12 15:29:54 by gly              ###   ########.fr        #
+#    Updated: 2019/04/14 14:47:20 by gly              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+AUTHOR	=	gly
 NAME	=	ft_ls
 
 SRC		=	ft_print_ls.c	\
@@ -36,7 +37,7 @@ LIBFTFLAG	=	-lft -L libft
 
 RM		=	/bin/rm -f
 
-all		:	$(NAME)
+all		:	$(NAME) auteur
 
 $(NAME)	:	$(LIBFT) $(OBJ)
 	$(CC) $(CFLAGS) -g -o $(NAME) $(OBJ) ft_strjoin_three.c print_t_ls.c $(LIBFTFLAG) 
@@ -56,4 +57,6 @@ fclean	:	clean
 
 re		: fclean all
 
+auteur :
+	echo $(AUTHOR) > auteur
 .PHONY	: all clean fclean re
