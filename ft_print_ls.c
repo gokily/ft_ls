@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:30 by gly               #+#    #+#             */
-/*   Updated: 2019/04/16 16:22:21 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/16 16:39:24 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,13 @@ static inline t_lfile	*ft_find_first_real_dir(t_lfile *ldir, t_lfile **lfile)
 	t_lfile		*tmp;
 
 	*lfile = ldir;
-	while (ldir != NULL && !(S_ISDIR(ldir->next->file->mode)))
-	{
-		ldir = ldir->next;
-	}
-	if (ldir != NULL)
+	while (ldir != NULL && !(S_ISDIR(ldir->file->mode)))
 	{
 		tmp = ldir;
 		ldir = ldir->next;
-		tmp->next = NULL;
 	}
+	if (ldir != NULL)
+		tmp->next = NULL;
 	return (ldir);
 }
 
