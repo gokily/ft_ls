@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 16:18:29 by gly               #+#    #+#             */
-/*   Updated: 2019/04/16 13:24:46 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/16 16:23:27 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ void		ft_lfile_sort(t_lfile **lfile, unsigned char flag)
 	if (*lfile == NULL || (*lfile)->next == NULL)
 		return ;
 	ft_lfile_sort2(lfile, &ft_compare_name);
-	ft_lfile_sort2(lfile, &ft_is_dir);
+	if (flag & LDIR)
+		ft_lfile_sort2(lfile, &ft_is_dir);
 	if (flag & MTIM)
 		ft_lfile_sort2(lfile, &ft_compare_mtim);
 	if (flag & REV)

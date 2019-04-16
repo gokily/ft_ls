@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2019/04/16 15:10:39 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/16 16:22:53 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define MTIM 1 << 4
 # define SEVERAL 1 << 5
 # define FIRST 1 << 6
+# define LDIR 1 << 7
 # define LSARG 1
 # define BUFFSIZE 1024
 #define COL_RED     "\x1b[31m"

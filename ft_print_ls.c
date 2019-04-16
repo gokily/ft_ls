@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:30 by gly               #+#    #+#             */
-/*   Updated: 2019/04/16 15:15:29 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/16 16:22:21 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ int					main(int ac, char **av)
 
 	if (!(ls = ft_parsels(ac, av)))
 		return (1);
+	ls->flag |= LDIR;
 	ft_lfile_sort(&ls->ldir, ls->flag);
+	ls->flag ^= LDIR;
 	ls = ft_print_ls(ls);
 	status = ls->status;
 	ft_freels(ls);

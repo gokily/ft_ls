@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:54 by gly               #+#    #+#             */
-/*   Updated: 2019/04/16 15:11:32 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/16 16:28:36 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ int			ft_print_dir(t_lfile *dir, t_ls *ls)
 		ls->flag ^= FIRST;
 	else
 		ft_putendl("");
+	if (ls->flag & SEVERAL)
+		ft_printf("%s:\n", dir->file->fullpath);
 	if (!(ft_getfile_in_dir(dir, ls->flag, &lfile)))
 		return (1);
 	ft_lfile_sort(&lfile, ls->flag);
-	if (ls->flag & SEVERAL)
-		ft_printf("%s:\n", dir->file->fullpath);
 	if (ls->flag & REC)
 		ls->flag |= SEVERAL;
 	if (ls->flag & LNG)
