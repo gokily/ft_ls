@@ -6,13 +6,13 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:54 by gly               #+#    #+#             */
-/*   Updated: 2019/04/16 13:48:05 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/16 15:11:32 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void		ft_print_dir_total(t_lfile *file)
+void		ft_print_dir_total(t_lfile *file)
 {
 	unsigned int	size;
 
@@ -61,13 +61,12 @@ static int		ft_getfile_in_dir(t_lfile *ldir, unsigned char flag,
 //La fonciton recursive
 int			ft_print_dir(t_lfile *dir, t_ls *ls)
 {
-	static int	first = 1;
 	t_lfile		*lfile;
 	t_lfile		*tmp;
 
 	lfile = NULL;
-	if (first == 1)
-		first = 0;
+	if (ls->flag & FIRST)
+		ls->flag ^= FIRST;
 	else
 		ft_putendl("");
 	if (!(ft_getfile_in_dir(dir, ls->flag, &lfile)))

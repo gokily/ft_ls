@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 16:06:43 by gly               #+#    #+#             */
-/*   Updated: 2019/04/16 11:59:25 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/16 15:04:08 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ t_lfile	*ft_lfile_new(char *filepath, unsigned char flag)
 	char		*link;
 	char		namebuf[BUFFSIZE];
 	acl_t acl;
-	//	acl_entry_t dummy;
 
 	if (!(elem = malloc(sizeof(t_lfile))) || !(file = malloc(sizeof(t_file))))
 		return (NULL);
