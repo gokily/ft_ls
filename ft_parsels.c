@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:16 by gly               #+#    #+#             */
-/*   Updated: 2019/04/16 13:00:49 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/16 13:07:11 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,10 @@ t_ls			*ft_parsels(int ac, char **av)
 		else
 		{
 			ls->nbdir++;
-			if (ft_check_dir_exist(av[i]) == 1)
-				if (!(ls = ft_parsedir(av[i], ls)))
-					return (NULL);
+			if (ft_check_dir_exist(av[i]) == 0)
+				ls->status = 1;
+			else if (!(ls = ft_parsedir(av[i], ls)))
+				return (NULL);
 			flag = 1;
 		}
 		i++;

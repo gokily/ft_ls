@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2019/04/16 13:02:22 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/16 13:12:54 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ void	ft_lfile_delall(t_lfile *file);
 t_ls	*ft_t_ls_new(void);
 
 
-void	ft_print_ls(t_ls *ls);
 int		ft_print_dir(t_lfile *dir, t_ls *ls);
 int		ft_print_lfile(t_lfile *file, unsigned char flag);
 int		ft_print_lfile_short(t_lfile *file);

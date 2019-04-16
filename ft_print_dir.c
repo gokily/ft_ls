@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:54 by gly               #+#    #+#             */
-/*   Updated: 2019/04/16 12:02:00 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/16 13:48:05 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,7 @@ static int		ft_getfile_in_dir(t_lfile *ldir, unsigned char flag,
 	t_lfile			*lst_elem;
 
 	if (!(S_ISDIR(ldir->file->mode)))
-	{
-		ft_putendl(ldir->file->fullpath);
 		return (0);
-	}
 	if (!(dir = opendir(ldir->file->fullpath)))
 		return (ft_dir_error(ldir->file->fullpath));
 	while ((elem = readdir(dir)))
@@ -74,7 +71,7 @@ int			ft_print_dir(t_lfile *dir, t_ls *ls)
 	else
 		ft_putendl("");
 	if (!(ft_getfile_in_dir(dir, ls->flag, &lfile)))
-		return (0);
+		return (1);
 	ft_lfile_sort(&lfile, ls->flag);
 	if (ls->flag & SEVERAL)
 		ft_printf("%s:\n", dir->file->fullpath);
@@ -91,10 +88,10 @@ int			ft_print_dir(t_lfile *dir, t_ls *ls)
 			if (S_ISDIR(tmp->file->mode) && ft_strcmp(tmp->file->name, ".") && 
 					ft_strcmp(tmp->file->name, ".."))
 				if(!(ft_print_dir(tmp, ls)))
-					return (0);
+					return (1);
 			tmp = tmp->next;
 		}
 	}
 	ft_lfile_delall(lfile);
-	return (1);
+	return (0);
 }
