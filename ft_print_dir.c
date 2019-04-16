@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:54 by gly               #+#    #+#             */
-/*   Updated: 2019/04/14 15:13:46 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/16 12:02:00 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int		ft_getfile_in_dir(t_lfile *ldir, unsigned char flag,
 		return (0);
 	}
 	if (!(dir = opendir(ldir->file->fullpath)))
-		return (ft_dir_error(1));
+		return (ft_dir_error(ldir->file->fullpath));
 	while ((elem = readdir(dir)))
 	{
 		if (flag & ALL || elem->d_name[0] != '.')
@@ -52,7 +52,7 @@ static int		ft_getfile_in_dir(t_lfile *ldir, unsigned char flag,
 			{
 				closedir(dir);
 				ft_lfile_delall(*lfile);
-				return (ft_dir_error(2));
+				return (0);
 			}
 			ft_lfile_push(lfile, lst_elem);
 		}

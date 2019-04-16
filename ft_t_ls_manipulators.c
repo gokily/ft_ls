@@ -9,5 +9,6 @@ t_ls	*ft_t_ls_new(void)
 	ls->nbdir = 0;
 	ls->flag = 0;
 	ls->ldir = NULL;
+	ls->status = 0;
 	return (ls);
 }

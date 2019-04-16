@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 16:06:43 by gly               #+#    #+#             */
-/*   Updated: 2019/04/14 15:24:44 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/16 11:59:25 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,9 @@ t_lfile	*ft_lfile_new(char *filepath, unsigned char flag)
 	elem->file = file;
 	if (lstat(filepath, &statbuf) == -1)
 	{
-		link = ft_strjoin("ls: ", filepath);
-		perror(link);
-		free(link);
+		ft_dir_error(filepath);
 		return (NULL);
 	}
-	//comment traiter les erreurs de file (acces ou autre)?
 	if (!(file->name = ft_filename(filepath, flag)))
 	{
 		free(elem);

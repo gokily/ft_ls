@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:16 by gly               #+#    #+#             */
-/*   Updated: 2019/04/12 15:58:16 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/16 13:00:49 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static inline t_ls	*ft_parsedir(char *dirpath, t_ls *ls)
 	if (!(elem = ft_lfile_new(path, LSARG)))
 		return (NULL);
 	ft_lfile_push(&ls->ldir, elem);
-	ls->nbdir++;
 	return (ls);
 }
 
@@ -46,6 +45,18 @@ static inline t_ls	*ft_parseflag(char *flag, t_ls *ls)
 	return (ls);
 }
 
+static inline int	ft_check_dir_exist(char *filename)
+{
+	struct stat statbuf;
+
+	if (lstat(filename, &statbuf) == -1)
+	{
+		ft_dir_error(filename);
+		return (0);
+	}
+	return (1);
+}
+
 t_ls			*ft_parsels(int ac, char **av)
 {
 	t_ls	*ls;
@@ -62,8 +73,10 @@ t_ls			*ft_parsels(int ac, char **av)
 			ls = ft_parseflag(av[i], ls);
 		else
 		{
-			if (!(ls = ft_parsedir(av[i], ls)))
-				return (NULL);
+			ls->nbdir++;
+			if (ft_check_dir_exist(av[i]) == 1)
+				if (!(ls = ft_parsedir(av[i], ls)))
+					return (NULL);
 			flag = 1;
 		}
 		i++;
