@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:54 by gly               #+#    #+#             */
-/*   Updated: 2019/04/18 15:04:13 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/18 15:24:26 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int		ft_getfile_in_dir(t_lfile *ldir, unsigned int flag,
 	if (!(S_ISDIR(ldir->file->mode)))
 		return (0);
 	if (!(dir = opendir(ldir->file->fullpath)))
-		return (ft_dir_error(ldir->file->fullpath));
+		return (ft_dir_error(ldir->file->name));
 	while ((elem = readdir(dir)))
 	{
 		if (flag & ALL || elem->d_name[0] != '.')
