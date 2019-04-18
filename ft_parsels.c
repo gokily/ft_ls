@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:16 by gly               #+#    #+#             */
-/*   Updated: 2019/04/18 10:51:45 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/18 11:01:42 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static inline t_ls	*ft_parsedir(char *dirpath, t_ls *ls)
 
 static inline t_ls	*ft_parseflag(char *flag, t_ls *ls)
 {
-	flag++;
 	while (*flag != '\0')
 	{
 		if (*flag == 'l')
@@ -63,20 +62,18 @@ static inline int	ft_check_dir_exist(char *filename)
 	return (1);
 }
 
-t_ls			*ft_parsels(int ac, char **av)
+t_ls				*ft_parsels(int ac, char **av)
 {
 	t_ls	*ls;
 	int		i;
-	int		flag;
 
-	if(!(ls = ft_t_ls_new()))
+	if (!(ls = ft_t_ls_new()))
 		return (NULL);
 	i = 1;
-	flag = 0;
 	while (i < ac)
 	{
-		if (flag == 0 && av[i][0] == '-')
-			ls = ft_parseflag(av[i], ls);
+		if (ls->nbdir == 0 && av[i][0] == '-')
+			ls = ft_parseflag(av[i]++, ls);
 		else
 		{
 			ls->nbdir++;
@@ -84,7 +81,6 @@ t_ls			*ft_parsels(int ac, char **av)
 				ls->status = 1;
 			else if (!(ls = ft_parsedir(av[i], ls)))
 				return (NULL);
-			flag = 1;
 		}
 		i++;
 	}
