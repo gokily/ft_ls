@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 08:49:44 by gly               #+#    #+#             */
-/*   Updated: 2019/03/14 10:24:07 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/18 13:51:15 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,42 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-static int	ft_write_out(char *str, int len)
+static inline int	ft_write_out(char *str, int len, int fd)
 {
-	write(1, str, len);
+	write(fd, str, len);
 	return (0);
 }
 
-int			ft_add_to_buffer(char *str, int len)
+static inline int	ft_last_write(char *str, int *i, int *ret, int *fd)
+{
+	int		tmp;
+
+	write(*fd, str, *i);
+	*i = 0;
+	tmp = *ret;
+	*ret = 0;
+	*fd = -1;
+	return (tmp);
+}
+
+int					ft_add_to_buffer(char *str, int len, int fd)
 {
 	static char	buf[BUFFSIZE];
 	static int	ret = 0;
 	static int	i = 0;
-	int			tmp;
+	static int	f = -1;
 
-	if (str == NULL)
+	if (f == -1)
 	{
-		write(1, buf, i);
-		i = 0;
-		tmp = ret;
-		ret = 0;
-		return (tmp);
+		f = fd;
+		return (0);
 	}
+	if (str == NULL)
+		return (ft_last_write(buf, &i, &ret, &f));
 	if (i + len > BUFFSIZE)
-		i = ft_write_out(buf, i);
+		i = ft_write_out(buf, i, f);
 	if (len > BUFFSIZE)
-		write(1, str, len);
+		write(f, str, len);
 	else
 	{
 		ft_strncpy(buf + i, str, len);

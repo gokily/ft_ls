@@ -30,7 +30,7 @@ static void	ft_add_width_char(char c, int width, int flag, int zero)
 	else
 		str[width - 1] = c;
 	str[width] = '\0';
-	ft_add_to_buffer(str, width);
+	ft_add_to_buffer(str, width, -1);
 }
 
 void		ft_conv_per(t_conv conv)

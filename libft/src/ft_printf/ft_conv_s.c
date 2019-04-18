@@ -32,7 +32,7 @@ static void	ft_add_width(char *str, t_conv conv)
 			ft_strfill_space(ret, 0, conv.width - conv.len);
 	}
 	ret[conv.width] = '\0';
-	ft_add_to_buffer(ret, conv.width);
+	ft_add_to_buffer(ret, conv.width, -1);
 }
 
 void		ft_conv_s(t_conv conv, va_list ap)
@@ -47,7 +47,7 @@ void		ft_conv_s(t_conv conv, va_list ap)
 		ft_add_width(str == NULL ? "(null)" : str, conv);
 	}
 	else if (str != NULL)
-		ft_add_to_buffer(str, conv.len);
+		ft_add_to_buffer(str, conv.len, -1);
 	else
-		ft_add_to_buffer("(null)", conv.len);
+		ft_add_to_buffer("(null)", conv.len, -1);
 }

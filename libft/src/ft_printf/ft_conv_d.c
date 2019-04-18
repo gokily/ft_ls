@@ -39,7 +39,7 @@ static void	ft_add_width_acc(long long nb, t_conv conv, int len, int flag)
 		pos = ft_strfill_zero(str, pos, conv.acc - conv.len);
 	ft_strfill_ll_base(str + pos, nb, "0123456789");
 	str[flag >= 1 ? conv.width : len] = '\0';
-	ft_add_to_buffer(str, flag >= 1 ? conv.width : len);
+	ft_add_to_buffer(str, flag >= 1 ? conv.width : len, -1);
 }
 
 static void	ft_conv_d2(t_conv conv, long long nb)

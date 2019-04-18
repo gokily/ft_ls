@@ -61,7 +61,7 @@ void	ft_zero_case(t_conv conv)
 	}
 	else
 		str[pos] = ' ';
-	ft_add_to_buffer(str, conv.width);
+	ft_add_to_buffer(str, conv.width, -1);
 }
 
 int		ft_atoi_pf(const char *str, int *index)

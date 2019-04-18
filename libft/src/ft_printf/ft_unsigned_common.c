@@ -112,5 +112,5 @@ void		ft_add_wd_acc_unsigned(unsigned long long nb, t_conv conv,
 		pos = ft_strfill_zero(str, pos, conv.acc - conv.len);
 	ft_strfill_nb(str + pos, nb, conv);
 	str[flag >= 1 ? conv.width : len] = '\0';
-	ft_add_to_buffer(str, flag >= 1 ? conv.width : len);
+	ft_add_to_buffer(str, flag >= 1 ? conv.width : len, -1);
 }

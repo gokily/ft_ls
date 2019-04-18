@@ -48,7 +48,7 @@ static void	ft_write_float(t_conv conv, long long whole,
 	pos++;
 	ft_strfill_fract(str + pos, conv.acc, fract);
 	str[flag == 1 ? conv.width : conv.len] = '\0';
-	ft_add_to_buffer(str, flag == 1 ? conv.width : conv.len);
+	ft_add_to_buffer(str, flag == 1 ? conv.width : conv.len, -1);
 }
 
 static void	ft_conv_f2(t_conv conv, long double nb)

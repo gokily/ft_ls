@@ -25,7 +25,7 @@ void	ft_add_str_to_buf(const char *format, int i, int len)
 		j++;
 	}
 	str[len] = '\0';
-	ft_add_to_buffer(str, len);
+	ft_add_to_buffer(str, len, -1);
 }
 
 int		ft_add_str(const char *format, int i)
