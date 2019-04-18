@@ -6,13 +6,13 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:52:35 by gly               #+#    #+#             */
-/*   Updated: 2019/04/01 13:50:36 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/18 10:14:17 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_space		ft_calculate_space(t_lfile *file, unsigned char flag)
+t_space		ft_calculate_space(t_lfile *file, unsigned int flag)
 {
 	int	n;
 	int	tmp;
@@ -88,13 +88,13 @@ t_space		ft_calculate_space(t_lfile *file, unsigned char flag)
 
 
 // need to change the location of function in the c files.
-int			ft_print_lfile(t_lfile *file, unsigned char flag)
+int			ft_print_lfile(t_lfile *file, unsigned int flag)
 {
 	if (file == NULL)
-	return (1);	
+		return (1);	
 	if (flag & LNG)
 		ft_print_lfile_long(file, flag);
 	else
-		ft_print_lfile_short(file);
+		ft_print_lfile_short(file, flag);
 	return (1);
 }

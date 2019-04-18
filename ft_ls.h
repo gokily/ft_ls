@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2019/04/16 16:22:53 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/18 10:41:35 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@
 # define REV 1 << 3
 # define MTIM 1 << 4
 # define SEVERAL 1 << 5
-# define FIRST 1 << 6
-# define LDIR 1 << 7
+# define COLUMN 1 << 6
+# define FIRST 1 << 10
+# define LDIR 1 << 11
 # define LSARG 1
 # define BUFFSIZE 1024
 #define COL_RED     "\x1b[31m"
@@ -78,11 +79,16 @@ typedef	struct		s_linfo
 {
 	int				maxl;
 	int				nb;
+	int				ncol;
+	int				nrow;
+	int				i;
+	int				j;
+	int				k;
 }					t_linfo;
 
 typedef	struct		s_ls
 {
-	unsigned char	flag;
+	unsigned int	flag;
 	size_t			nbdir;
 	int				status;
 	t_lfile			*ldir;
@@ -101,9 +107,9 @@ typedef struct		s_space
 
 t_ls				*ft_parsels(int ac, char **av);
 
-t_lfile	*ft_lfile_new(char *filepath, unsigned char flag);
+t_lfile	*ft_lfile_new(char *filepath, unsigned int flag);
 void	ft_lfile_push(t_lfile **lst, t_lfile *elem);
-void	ft_lfile_sort(t_lfile **lfile, unsigned char flag);
+void	ft_lfile_sort(t_lfile **lfile, unsigned int flag);
 void	ft_lfile_delall(t_lfile *file);
 
 t_ls	*ft_t_ls_new(void);
@@ -111,10 +117,10 @@ t_ls	*ft_t_ls_new(void);
 
 int		ft_print_dir(t_lfile *dir, t_ls *ls);
 void	ft_print_dir_total(t_lfile *file);
-int		ft_print_lfile(t_lfile *file, unsigned char flag);
-int		ft_print_lfile_short(t_lfile *file);
-int		ft_print_lfile_long(t_lfile *file, unsigned char flag);
-t_space	ft_calculate_space(t_lfile *file, unsigned char flag);
+int		ft_print_lfile(t_lfile *file, unsigned int flag);
+int		ft_print_lfile_short(t_lfile *file, unsigned int flag);
+int		ft_print_lfile_long(t_lfile *file, unsigned int flag);
+t_space	ft_calculate_space(t_lfile *file, unsigned int flag);
 
 char	*ft_get_time(struct timespec file_timespec);
 

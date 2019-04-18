@@ -15,7 +15,7 @@
 #include <sys/xattr.h>
 #include <sys/acl.h>
 
-char	*ft_filename(const char *filepath, unsigned char flag)
+char	*ft_filename(const char *filepath, unsigned int flag)
 {
 	char	*name;
 	char	*slash;
@@ -70,7 +70,7 @@ void	ft_fill_file(t_file *elem, struct stat statbuf)
 	elem->link = NULL;
 }
 
-t_lfile	*ft_lfile_new(char *filepath, unsigned char flag)
+t_lfile	*ft_lfile_new(char *filepath, unsigned int flag)
 {
 	t_lfile		*elem;
 	struct stat	statbuf;

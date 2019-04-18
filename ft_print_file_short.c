@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 16:38:39 by gly               #+#    #+#             */
-/*   Updated: 2019/04/01 14:37:30 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/18 10:45:58 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 
-int		ft_get_window_size(void)
+static inline int		ft_get_window_size(void)
 {
 	struct winsize w;
 
@@ -22,7 +22,7 @@ int		ft_get_window_size(void)
 	return (w.ws_col);
 }
 
-t_linfo		ft_get_lfile_info(t_lfile *file)
+static inline t_linfo	ft_get_lfile_info(t_lfile *file)
 {
 	int		maxl;
 	int		n;
@@ -40,48 +40,54 @@ t_linfo		ft_get_lfile_info(t_lfile *file)
 	}
 	linfo.nb = nb;
 	linfo.maxl = maxl;
+	linfo.ncol = ft_get_window_size() / (maxl + 1);
+	linfo.nrow = nb / linfo.ncol + (nb % linfo.ncol ? 1 : 0);
+	linfo.i = 0;
+	linfo.j = 0;
+	linfo.k = 0;
 	return (linfo);
 }
 
-int		ft_print_lfile_short(t_lfile *file)
+static inline void		ft_print_lfile_columns(t_lfile *file, t_linfo linfo)
 {
-	int		ncol;
-	int		nrow;
-	int		i;
-	int		j;
-	int		k;
-	t_linfo	linfo;
 	t_lfile	*head;
 
-	linfo = ft_get_lfile_info(file);
-	ncol = ft_get_window_size() / (linfo.maxl + 1);
-	nrow = linfo.nb / ncol + (linfo.nb % ncol ? 1 : 0);
 	head = file;
-	k = 0;
-	while (k < nrow)
+	while (linfo.i++ < linfo.nrow)
 	{
 		file = head;
-		i = 1;
-		while (i <= ncol)
+		linfo.j = 1;
+		while (linfo.j++ <= linfo.ncol)
 		{
-			j = 0;
-				ft_printf("%s%-*s" COLRESET, file->file->col, linfo.maxl + 1,
-						file->file->name);
-			while (j < nrow)
+			linfo.k = 0;
+			ft_printf("%s%-*s" COLRESET, file->file->col, linfo.maxl + 1,
+					file->file->name);
+			while (linfo.k++ < linfo.nrow)
 			{
 				file = file->next;
 				if (file == NULL)
 				{
-					j = nrow;
-					i = ncol + 1;
+					linfo.k = linfo.nrow;
+					linfo.j = linfo.ncol + 1;
 				}
-				j++;
 			}
-			i++;
 		}
 		ft_printf("\n");
 		head = head->next;
-		k++;
+	}
+}
+
+int						ft_print_lfile_short(t_lfile *file, unsigned int flag)
+{
+	if (flag & COLUMN)
+		ft_print_lfile_columns(file, ft_get_lfile_info(file));
+	else
+	{
+		while (file != NULL)
+		{
+			ft_printf("%s%s%s\n", file->file->col, file->file->name, COLRESET);
+			file = file->next;
+		}
 	}
 	return (1);
 }

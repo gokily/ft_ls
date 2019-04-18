@@ -75,7 +75,7 @@ static void	ft_lfile_sort2(t_lfile **lfile, int (*cmp)(t_file *, t_file *))
 }
 
 		
-void		ft_lfile_sort(t_lfile **lfile, unsigned char flag)
+void		ft_lfile_sort(t_lfile **lfile, unsigned int flag)
 {
 	if (*lfile == NULL || (*lfile)->next == NULL)
 		return ;

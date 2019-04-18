@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:16 by gly               #+#    #+#             */
-/*   Updated: 2019/04/16 13:07:11 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/18 10:09:57 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ static inline t_ls	*ft_parseflag(char *flag, t_ls *ls)
 			ls->flag |= REV;
 		else if (*flag == 't')
 			ls->flag |= MTIM;
+		else if (*flag == 'C')
+			ls->flag |= COLUMN;
+		else if (*flag == '1')
+			ls->flag ^= COLUMN;
 		flag++;
 	}
 	return (ls);

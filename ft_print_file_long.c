@@ -56,7 +56,7 @@ char    *ft_lsperms(int mode)
 	return(perms);
 }
 
-int		ft_print_file_long(t_file *file, unsigned char flag, t_space space)
+int		ft_print_file_long(t_file *file, unsigned int flag, t_space space)
 {
 	char	*perms;
 	char	*time_str;
@@ -91,7 +91,7 @@ int		ft_print_file_long(t_file *file, unsigned char flag, t_space space)
 	return (1);
 }
 
-int		ft_print_lfile_long(t_lfile *file, unsigned char flag)
+int		ft_print_lfile_long(t_lfile *file, unsigned int flag)
 {
 	t_space	space;
 

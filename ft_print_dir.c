@@ -28,7 +28,7 @@ void		ft_print_dir_total(t_lfile *file)
 	return ;
 }
 
-static int		ft_getfile_in_dir(t_lfile *ldir, unsigned char flag,
+static int		ft_getfile_in_dir(t_lfile *ldir, unsigned int flag,
 		t_lfile **lfile)
 {
 	DIR				*dir;
