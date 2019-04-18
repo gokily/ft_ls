@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 16:18:29 by gly               #+#    #+#             */
-/*   Updated: 2019/04/16 16:23:27 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/18 14:37:44 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 static int ft_compare_mtim(t_file *current, t_file *next)
 {
 	if (current->mtim.tv_sec < next->mtim.tv_sec)
+		return (1);
+	else
+		return (0);
+}
+
+static int ft_compare_atim(t_file *current, t_file *next)
+{
+	if (current->atim.tv_sec < next->atim.tv_sec)
 		return (1);
 	else
 		return (0);
@@ -82,7 +90,9 @@ void		ft_lfile_sort(t_lfile **lfile, unsigned int flag)
 	ft_lfile_sort2(lfile, &ft_compare_name);
 	if (flag & LDIR)
 		ft_lfile_sort2(lfile, &ft_is_dir);
-	if (flag & MTIM)
+	if (flag & ATIM && flag & MTIM)
+		ft_lfile_sort2(lfile, &ft_compare_atim);
+	else if (flag & MTIM)
 		ft_lfile_sort2(lfile, &ft_compare_mtim);
 	if (flag & REV)
 		ft_lfile_rev(lfile);
