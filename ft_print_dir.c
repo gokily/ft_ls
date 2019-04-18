@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:54 by gly               #+#    #+#             */
-/*   Updated: 2019/04/16 16:28:36 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/18 15:04:13 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int			ft_print_dir(t_lfile *dir, t_ls *ls)
 		{
 			if (S_ISDIR(tmp->file->mode) && ft_strcmp(tmp->file->name, ".") && 
 					ft_strcmp(tmp->file->name, ".."))
-				if(!(ft_print_dir(tmp, ls)))
+				if((ft_print_dir(tmp, ls)))
 					return (1);
 			tmp = tmp->next;
 		}
