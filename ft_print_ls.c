@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:30 by gly               #+#    #+#             */
-/*   Updated: 2019/04/16 16:39:24 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/18 14:51:41 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ static inline t_lfile	*ft_find_first_real_dir(t_lfile *ldir, t_lfile **lfile)
 	return (ldir);
 }
 
-static inline void ft_print_false_dir(t_lfile *lfile, t_ls *ls)
+static inline void		ft_print_false_dir(t_lfile *lfile, t_ls *ls)
 {
 	ft_print_lfile(lfile, ls->flag);
 	ft_lfile_delall(lfile);
 }
 
-static inline t_ls	*ft_print_ls(t_ls *ls)
+static inline t_ls		*ft_print_ls(t_ls *ls)
 {
 	t_lfile	*ldir;
 	t_lfile	*lfile;
@@ -55,28 +55,28 @@ static inline t_ls	*ft_print_ls(t_ls *ls)
 	return (ls);
 }
 
-void				ft_freels(t_ls *ls)
+static inline int		ft_freels(t_ls *ls)
 {
-	t_lfile	*ldir;
+	int		status;
 
-	ldir = ls->ldir;
-	ft_lfile_delall(ldir);
+	ft_lfile_delall(ls->ldir);
+	status = ls->status;
 	free(ls);
 	ls = NULL;
+	return (status);
 }
 
 int					main(int ac, char **av)
 {
 	t_ls		*ls;
-	int			status;
 
 	if (!(ls = ft_parsels(ac, av)))
 		return (1);
+	if (ls->ldir == NULL)
+		return (ft_freels(ls));
 	ls->flag |= LDIR;
 	ft_lfile_sort(&ls->ldir, ls->flag);
 	ls->flag ^= LDIR;
 	ls = ft_print_ls(ls);
-	status = ls->status;
-	ft_freels(ls);
-	return (status);
+	return (ft_freels(ls));
 }
