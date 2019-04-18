@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 16:38:39 by gly               #+#    #+#             */
-/*   Updated: 2019/04/18 14:15:31 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/18 16:48:41 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static inline int		ft_get_window_size(void)
 {
 	struct winsize w;
 
-	ioctl(STDOUT_FILENO, TIOCGSIZE, &w);
+	ioctl(STDIN_FILENO, TIOCGSIZE, &w);
 	return (w.ws_col);
 }
 
@@ -73,7 +73,7 @@ static inline void		ft_print_lfile_columns(t_lfile *file, t_linfo linfo,
 				}
 			}
 		}
-		ft_printf("\n");
+		ft_putchar('\n');
 		head = head->next;
 	}
 }
