@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:16 by gly               #+#    #+#             */
-/*   Updated: 2019/04/18 10:09:57 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/18 10:51:45 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static inline t_ls	*ft_parseflag(char *flag, t_ls *ls)
 			ls->flag |= COLUMN;
 		else if (*flag == '1')
 			ls->flag ^= COLUMN;
+		if (ft_strchr("C1", *flag))
+			ls->flag ^= LNG;
 		flag++;
 	}
 	return (ls);
