@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2019/04/18 10:41:35 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/18 11:56:49 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@
 # define MTIM 1 << 4
 # define SEVERAL 1 << 5
 # define COLUMN 1 << 6
+# define COLOR 1 << 7
 # define FIRST 1 << 10
 # define LDIR 1 << 11
 # define LSARG 1
 # define BUFFSIZE 1024
+# define LSOPTION "CGMRalrt1"
 #define COL_RED     "\x1b[31m"
 #define COL_GREEN   "\x1b[32m"
 #define COL_YELLOW  "\x1b[33m"

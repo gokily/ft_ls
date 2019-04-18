@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:48:59 by gly               #+#    #+#             */
-/*   Updated: 2019/04/01 10:58:49 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/18 14:18:52 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ int		ft_print_file_long(t_file *file, unsigned int flag, t_space space)
 	}
 	else
 		ft_printf("%*u ", space.four_c, (unsigned int)file->size);
-	ft_printf("%s %s%s" COLRESET, time_str, file->col, file->name);
+	ft_printf("%s %s%s%s", time_str, flag & COLOR ? file->col : "",
+			file->name, flag & COLOR ? COLRESET : "");
 	if (S_ISLNK(file->mode))
 		ft_printf(" -> %s", file->link);
 	ft_printf("\n");

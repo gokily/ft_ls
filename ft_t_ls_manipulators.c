@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 10:31:01 by gly               #+#    #+#             */
-/*   Updated: 2019/04/18 10:31:51 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/18 11:13:00 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_ls	*ft_t_ls_new(void)
 	if (!(ls = malloc(sizeof(t_ls))))
 		return (NULL);
 	ls->nbdir = 0;
-	ls->flag = FIRST | COLUMN;
+	ls->flag = FIRST | COLUMN | COLOR;
 	ls->ldir = NULL;
 	ls->status = 0;
 	return (ls);

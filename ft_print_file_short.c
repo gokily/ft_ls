@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 16:38:39 by gly               #+#    #+#             */
-/*   Updated: 2019/04/18 10:45:58 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/18 14:15:31 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static inline t_linfo	ft_get_lfile_info(t_lfile *file)
 	return (linfo);
 }
 
-static inline void		ft_print_lfile_columns(t_lfile *file, t_linfo linfo)
+static inline void		ft_print_lfile_columns(t_lfile *file, t_linfo linfo,
+		unsigned int flag)
 {
 	t_lfile	*head;
 
@@ -60,8 +61,8 @@ static inline void		ft_print_lfile_columns(t_lfile *file, t_linfo linfo)
 		while (linfo.j++ <= linfo.ncol)
 		{
 			linfo.k = 0;
-			ft_printf("%s%-*s" COLRESET, file->file->col, linfo.maxl + 1,
-					file->file->name);
+			ft_printf("%s%-*s%s", flag ? file->file->col : "", linfo.maxl + 1,
+					file->file->name, flag ? COLRESET : "");
 			while (linfo.k++ < linfo.nrow)
 			{
 				file = file->next;
@@ -80,13 +81,25 @@ static inline void		ft_print_lfile_columns(t_lfile *file, t_linfo linfo)
 int						ft_print_lfile_short(t_lfile *file, unsigned int flag)
 {
 	if (flag & COLUMN)
-		ft_print_lfile_columns(file, ft_get_lfile_info(file));
+		ft_print_lfile_columns(file, ft_get_lfile_info(file), flag & COLOR);
 	else
 	{
-		while (file != NULL)
+		if (flag & COLOR)
 		{
-			ft_printf("%s%s%s\n", file->file->col, file->file->name, COLRESET);
-			file = file->next;
+			while (file != NULL)
+			{
+				ft_printf("%s%s%s\n", file->file->col, file->file->name,
+						COLRESET);
+				file = file->next;
+			}
+		}
+		else
+		{
+			while (file != NULL)
+			{
+				ft_putendl(file->file->name);
+				file = file->next;
+			}
 		}
 	}
 	return (1);

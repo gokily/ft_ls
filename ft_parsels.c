@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:16 by gly               #+#    #+#             */
-/*   Updated: 2019/04/18 11:01:42 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/18 13:56:07 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,29 @@ static inline t_ls	*ft_parsedir(char *dirpath, t_ls *ls)
 	return (ls);
 }
 
+static inline void	ft_check_illegal_flag(char *flag, t_ls *ls)
+{
+	int		i;
+
+	i = 0;
+	while (flag[i] != '\0')
+	{
+		if (ft_strchr(LSOPTION, flag[i]) == NULL)
+		{
+			ft_dprintf(STDERR_FILENO,
+					"ls: illegal option -- %c\nusage: ls [-%s] [file ...]\n",
+					flag[i], LSOPTION);
+			free(ls);
+			ls = NULL;
+			exit(EXIT_FAILURE);
+		}
+		i++;
+	}
+}
+
 static inline t_ls	*ft_parseflag(char *flag, t_ls *ls)
 {
+	ft_check_illegal_flag(flag, ls);
 	while (*flag != '\0')
 	{
 		if (*flag == 'l')
@@ -42,9 +63,13 @@ static inline t_ls	*ft_parseflag(char *flag, t_ls *ls)
 		else if (*flag == 'C')
 			ls->flag |= COLUMN;
 		else if (*flag == '1')
-			ls->flag ^= COLUMN;
+			ls->flag = ~(~ls->flag | COLUMN);
+		else if (*flag == 'G')
+			ls->flag |= COLOR;
+		else if (*flag == 'M')
+			ls->flag = ~(~ls->flag | COLOR);
 		if (ft_strchr("C1", *flag))
-			ls->flag ^= LNG;
+			ls->flag = ~(~ls->flag | LNG);
 		flag++;
 	}
 	return (ls);
@@ -73,7 +98,7 @@ t_ls				*ft_parsels(int ac, char **av)
 	while (i < ac)
 	{
 		if (ls->nbdir == 0 && av[i][0] == '-')
-			ls = ft_parseflag(av[i]++, ls);
+			ls = ft_parseflag(av[i] + 1, ls);
 		else
 		{
 			ls->nbdir++;
