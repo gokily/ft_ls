@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:16 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 15:01:29 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 18:44:45 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static inline t_ls	*ft_parsedir(char *dirpath, t_ls *ls)
 
 	if (!(path = ft_strdup(dirpath)))
 		return (NULL);
-	if (!(elem = ft_lfile_new(path, LSARG, ls->flag)))
+	if (!(elem = ft_lfile_new(path, LSARG, ls->flag, ls)))
 		return (NULL);
 	ft_lfile_push(&ls->ldir, elem);
 	return (ls);
@@ -59,10 +59,19 @@ static inline void	ft_parseflag2(char *flag, t_ls *ls)
 		ls->flag |= COLOR;
 	else if (*flag == 'M')
 		ls->flag = ~(~ls->flag | COLOR);
+	else if (*flag == 't')
+		ls->flag |= MTIM;
+	else if (*flag == 'u')
+		ls->flag |= ATIM;
 }
 
 static inline t_ls	*ft_parseflag(char *flag, t_ls *ls)
 {
+	if (ft_strcmp(flag, "-") == 0)
+	{
+		ls->flag |= ENDOPT;
+		return (ls);
+	}
 	ft_check_illegal_flag(flag, ls);
 	while (*flag != '\0')
 	{
@@ -74,10 +83,6 @@ static inline t_ls	*ft_parseflag(char *flag, t_ls *ls)
 			ls->flag |= ALL;
 		else if (*flag == 'r')
 			ls->flag |= REV;
-		else if (*flag == 't')
-			ls->flag |= MTIM;
-		else if (*flag == 'u')
-			ls->flag |= ATIM;
 		else
 			ft_parseflag2(flag, ls);
 		if (ft_strchr("C1", *flag))
@@ -98,19 +103,18 @@ t_ls				*ft_parsels(int ac, char **av)
 	i = 1;
 	while (i < ac)
 	{
-		if (ls->nbdir == 0 && av[i][0] == '-')
+		if (!(ls->flag & ENDOPT) && av[i][0] == '-' && ft_strlen(av[i]) > 1)
 			ls = ft_parseflag(av[i] + 1, ls);
 		else
 		{
 			ls->nbdir++;
+			ls->flag |= ENDOPT;
 			if (lstat(av[i], &statbuf) == -1)
-				ls->status = ft_dir_error(av[i]) == 0 ? 1 : 0;
+				ls->status = ft_dir_error(av[i], ls);
 			else if (!(ls = ft_parsedir(av[i], ls)))
 				return (NULL);
 		}
 		i++;
 	}
-	if (ls->nbdir == 0)
-		ls = ft_parsedir(".", ls);
-	return (ls);
+	return (ls->nbdir == 0 ? ft_parsedir(".", ls) : ls);
 }

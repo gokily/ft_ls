@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 08:33:37 by gly               #+#    #+#             */
-/*   Updated: 2019/04/18 13:53:55 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 16:57:04 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		ft_printf(const char *format, ...)
 		return (-1);
 	if (ft_strchr(format, '%') == NULL)
 		return (ft_printstr((char *)format));
-	ft_add_to_buffer(NULL, 0, STDIN_FILENO);
+	ft_add_to_buffer(NULL, 0, STDOUT_FILENO);
 	va_start(ap, format);
 	ret = ft_printf2(format, ap);
 	va_end(ap);

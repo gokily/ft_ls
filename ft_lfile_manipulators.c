@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 16:06:43 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 14:55:44 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 17:29:40 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	ft_lfile_delall(t_lfile *lfile)
 		file = lfile->file;
 		ft_freenull(file->name);
 		ft_freenull(file->fullpath);
-		ft_freenull(file->link);
 		ft_freenull(file);
 		ft_freenull(lfile);
 	}

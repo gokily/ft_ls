@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:30 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 14:54:57 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 18:47:02 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,21 @@ static inline t_lfile	*ft_find_first_real_dir(t_lfile *ldir, t_lfile **lfile)
 	return (ldir);
 }
 
-static inline void		ft_print_false_dir(t_lfile *lfile, t_ls *ls)
-{
-	ft_print_lfile(lfile, ls->flag);
-	ft_lfile_delall(lfile);
-}
-
 static inline t_ls		*ft_print_ls(t_ls *ls)
 {
 	t_lfile	*ldir;
 	t_lfile	*lfile;
 
+	lfile = NULL;
 	if (ls->nbdir > 1)
 		ls->flag |= SEVERAL;
 	if (!(S_ISDIR(ls->ldir->file->mode)))
 	{
 		ls->flag ^= FIRST;
 		ls->ldir = ft_find_first_real_dir(ls->ldir, &lfile);
-		ft_print_false_dir(lfile, ls);
+		ft_lfile_sort(&lfile, ls->flag);
+		ft_print_lfile(lfile, ls->flag);
+		ft_lfile_delall(lfile);
 	}
 	ldir = ls->ldir;
 	while (ldir != NULL)
@@ -75,9 +72,7 @@ int						main(int ac, char **av)
 		return (1);
 	if (ls->ldir == NULL)
 		return (ft_freels(ls));
-	ls->flag |= LDIR;
-	ft_lfile_sort(&ls->ldir, ls->flag);
-	ls->flag ^= LDIR;
+	ft_lfile_sort(&ls->ldir, LDIR);
 	ls = ft_print_ls(ls);
 	return (ft_freels(ls));
 }

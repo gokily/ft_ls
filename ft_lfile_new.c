@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 14:33:40 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 15:00:08 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 18:49:46 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,10 @@ static inline char	*ft_filename(const char *filepath, unsigned int flag)
 	return (name);
 }
 
-static inline void	ft_fill_file(t_file *elem, struct stat statbuf)
+static inline int	ft_fill_file(t_file *elem, struct stat statbuf)
 {
 	acl_t	acl;
-	char	namebuf[BUFFSIZE];
-	char	link[BUFFSIZE];
+	char	*link;
 
 	elem->mode = statbuf.st_mode;
 	elem->nlink = statbuf.st_nlink;
@@ -57,6 +56,8 @@ static inline void	ft_fill_file(t_file *elem, struct stat statbuf)
 	elem->link = NULL;
 	if (S_ISLNK(statbuf.st_mode))
 	{
+		if (!(link = ft_strnew(BUFFSIZE)))
+			return (0);
 		readlink(elem->fullpath, link, BUFFSIZE);
 		elem->link = link;
 	}
@@ -64,14 +65,15 @@ static inline void	ft_fill_file(t_file *elem, struct stat statbuf)
 	acl = acl_get_link_np(elem->fullpath, ACL_TYPE_EXTENDED);
 	elem->acl = acl == NULL ? 0 : 1;
 	acl_free(acl);
-	elem->ext = listxattr(elem->fullpath, namebuf, BUFFSIZE, 0) > 0 ? 1 : 0;
+	return (1);
 }
 
 t_lfile				*ft_lfile_new(char *filepath, unsigned int lsflag,
-		unsigned int flag)
+		unsigned int flag, t_ls *ls)
 {
 	t_lfile		*elem;
 	struct stat	statbuf;
+	char		namebuf[BUFFSIZE];
 	t_file		*file;
 
 	if (!(elem = malloc(sizeof(t_lfile))) ||
@@ -80,7 +82,7 @@ t_lfile				*ft_lfile_new(char *filepath, unsigned int lsflag,
 	elem->file = file;
 	if (lstat(filepath, &statbuf) == -1)
 	{
-		ft_dir_error(filepath);
+		ft_dir_error(filepath, ls);
 		return (NULL);
 	}
 	if (!(file->name = ft_filename(filepath, lsflag)))
@@ -89,7 +91,9 @@ t_lfile				*ft_lfile_new(char *filepath, unsigned int lsflag,
 		return (NULL);
 	}
 	file->fullpath = filepath;
-	ft_fill_file(file, statbuf);
+	if (!(ft_fill_file(file, statbuf)))
+		return (NULL);
+	file->ext = listxattr(filepath, namebuf, BUFFSIZE, 0) > 0 ? 1 : 0;
 	ft_set_colors(file, &(file->col), flag);
 	elem->next = NULL;
 	return (elem);

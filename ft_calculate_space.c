@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 14:07:33 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 15:00:50 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 17:52:06 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,9 @@ static inline t_space	ft_calculate_space_four(t_lfile *file, t_space space)
 		n = n > tmp ? n : tmp;
 		file = file->next;
 	}
-	space.four_c = space.four_a + space.four_b + 2 > n ?
-		space.four_a + space.four_b + 2 : n;
+	space.four_c = space.four_a != 0 && space.four_b != 0
+		&& space.four_a + space.four_b + 2 > n
+		? space.four_a + space.four_b + 2 : n;
 	return (space);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 16:04:10 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 17:11:58 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define SEVERAL 1 << 6
 # define COLUMN 1 << 7
 # define COLOR 1 << 8
+# define ENDOPT 1 << 9
 # define FIRST 1 << 10
 # define LDIR 1 << 11
 # define LSARG 1
@@ -91,7 +92,7 @@ typedef struct		s_space
 t_ls				*ft_parsels(int ac, char **av);
 
 t_lfile				*ft_lfile_new(char *filepath, unsigned int lsflag,
-		unsigned int flag);
+		unsigned int flag, t_ls *ls);
 void				ft_lfile_push(t_lfile **lst, t_lfile *elem);
 void				ft_lfile_sort(t_lfile **lfile, unsigned int flag);
 void				ft_lfile_delall(t_lfile *file);
@@ -112,6 +113,6 @@ int					ft_compare_atim(t_file *current, t_file *next);
 int					ft_compare_name(t_file *current, t_file *next);
 int					ft_is_dir(t_file *current, t_file *next);
 
-int					ft_dir_error(char *file);
+int					ft_dir_error(char *file, t_ls *ls);
 
 #endif
