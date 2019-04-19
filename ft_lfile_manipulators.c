@@ -6,90 +6,12 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 16:06:43 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 11:42:58 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 14:55:44 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "ft_ls.h"
-#include <grp.h>
-#include <sys/xattr.h>
-#include <sys/acl.h>
-
-char	*ft_filename(const char *filepath, unsigned int flag)
-{
-	char	*name;
-	char	*slash;
-
-	if (flag == LSARG)
-	{
-		if (!(name = ft_strdup(filepath)))
-			return (NULL);
-	}
-	else 
-	{
-		slash = ft_strrchr(filepath, '/');
-		if (!(name = ft_strdup(slash != NULL ? slash + 1 : filepath)))
-			return (NULL);
-	}
-	return (name);
-}
-
-void	ft_fill_file(t_file *elem, struct stat statbuf)
-{
-	elem->mode = statbuf.st_mode;
-	elem->nlink = statbuf.st_nlink;
-	elem->size = statbuf.st_size;
-	elem->blksize = statbuf.st_blksize;
-	elem->blkcnt = statbuf.st_blocks;
-	elem->uid = getpwuid(statbuf.st_uid)->pw_name;
-	elem->gid = getgrgid(statbuf.st_gid)->gr_name;
-	elem->atim = statbuf.st_atimespec;
-	elem->mtim = statbuf.st_mtimespec;
-	elem->ctim = statbuf.st_ctimespec;
-	elem->rdev = statbuf.st_rdev;
-	elem->link = NULL;
-}
-
-t_lfile	*ft_lfile_new(char *filepath, unsigned int lsflag, unsigned int flag)
-{
-	t_lfile		*elem;
-	struct stat	statbuf;
-	t_file		*file;
-	char		*link;
-	char		namebuf[BUFFSIZE];
-	acl_t acl;
-
-	if (!(elem = malloc(sizeof(t_lfile))) || !(file = malloc(sizeof(t_file))))
-		return (NULL);
-	elem->file = file;
-	if (lstat(filepath, &statbuf) == -1)
-	{
-		ft_dir_error(filepath);
-		return (NULL);
-	}
-	if (!(file->name = ft_filename(filepath, lsflag)))
-	{
-		free(elem);
-		return (NULL);
-	}
-	file->ext = listxattr(filepath, namebuf, BUFFSIZE, 0) > 0 ? 1 : 0;
-	acl = NULL;
-	acl = acl_get_link_np(filepath, ACL_TYPE_EXTENDED);
-	file->acl = acl == NULL ? 0 : 1;
-	acl_free(acl);
-	file->fullpath = filepath;
-	ft_fill_file(file, statbuf);
-	ft_set_colors(file, &(file->col), flag);
-	if (S_ISLNK(statbuf.st_mode))
-	{
-		if (!(link = ft_strnew(BUFFSIZE)))
-			return (NULL);
-		readlink(filepath, link, BUFFSIZE);
-		file->link = link;
-	}
-	elem->next = NULL;
-	return (elem);
-}
 
 void	ft_lfile_push(t_lfile **lst, t_lfile *elem)
 {
@@ -124,12 +46,12 @@ void	ft_lfile_delall(t_lfile *lfile)
 	while (elem != NULL)
 	{
 		lfile = elem;
-		elem = elem->next;			
+		elem = elem->next;
 		file = lfile->file;
 		ft_freenull(file->name);
 		ft_freenull(file->fullpath);
 		ft_freenull(file->link);
 		ft_freenull(file);
 		ft_freenull(lfile);
-	}	
+	}
 }

@@ -6,10 +6,11 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:30 by gly               #+#    #+#             */
-/*   Updated: 2019/04/18 14:51:41 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 14:54:57 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "ft_ls.h"
 
 static inline t_lfile	*ft_find_first_real_dir(t_lfile *ldir, t_lfile **lfile)
@@ -66,7 +67,7 @@ static inline int		ft_freels(t_ls *ls)
 	return (status);
 }
 
-int					main(int ac, char **av)
+int						main(int ac, char **av)
 {
 	t_ls		*ls;
 

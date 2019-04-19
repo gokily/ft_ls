@@ -6,24 +6,16 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 11:35:12 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 16:04:10 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 # define FT_LS_H
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <stdint.h>
-#include <dirent.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <pwd.h>
-#include <time.h>
-#include "libft/incl/libft.h"
-#include "libft/incl/ft_printf.h"
+# include <sys/stat.h>
+# include <dirent.h>
+# include <string.h>
 
 # define LNG 1
 # define REC 1 << 1
@@ -39,7 +31,7 @@
 # define LSARG 1
 # define BUFFSIZE 1024
 # define LSOPTION "CGMRalrtu1"
-#define COLRESET   "\x1b[0m"
+# define COLRESET   "\x1b[0m"
 
 typedef struct		s_file
 {
@@ -56,7 +48,6 @@ typedef struct		s_file
 	char			*link;
 	struct timespec	atim;
 	struct timespec	mtim;
-	struct timespec	ctim;
 	int				ext;
 	int				acl;
 	char			*col;
@@ -64,7 +55,7 @@ typedef struct		s_file
 
 typedef struct		s_lfile
 {
-	t_file			*file;	
+	t_file			*file;
 	struct s_lfile	*next;
 }					t_lfile;
 
@@ -97,32 +88,30 @@ typedef struct		s_space
 	int	four_c;
 }					t_space;
 
-
 t_ls				*ft_parsels(int ac, char **av);
 
-t_lfile	*ft_lfile_new(char *filepath, unsigned int lsflag, unsigned int flag);
-void	ft_lfile_push(t_lfile **lst, t_lfile *elem);
-void	ft_lfile_sort(t_lfile **lfile, unsigned int flag);
-void	ft_lfile_delall(t_lfile *file);
+t_lfile				*ft_lfile_new(char *filepath, unsigned int lsflag,
+		unsigned int flag);
+void				ft_lfile_push(t_lfile **lst, t_lfile *elem);
+void				ft_lfile_sort(t_lfile **lfile, unsigned int flag);
+void				ft_lfile_delall(t_lfile *file);
 
-t_ls	*ft_t_ls_new(void);
+t_ls				*ft_t_ls_new(void);
 
+int					ft_print_dir(t_lfile *dir, t_ls *ls);
+int					ft_print_lfile(t_lfile *file, unsigned int flag);
+int					ft_print_lfile_short(t_lfile *file, unsigned int flag);
+int					ft_print_lfile_long(t_lfile *file, unsigned int flag);
+t_space				ft_calculate_space(t_lfile *file);
 
-int		ft_print_dir(t_lfile *dir, t_ls *ls);
-void	ft_print_dir_total(t_lfile *file);
-int		ft_print_lfile(t_lfile *file, unsigned int flag);
-int		ft_print_lfile_short(t_lfile *file, unsigned int flag);
-int		ft_print_lfile_long(t_lfile *file, unsigned int flag);
-t_space	ft_calculate_space(t_lfile *file, unsigned int flag);
+char				*ft_get_time(struct timespec file_timespec);
+int					ft_set_colors(t_file *file, char **col, unsigned int flag);
 
-char	*ft_get_time(struct timespec file_timespec);
-int		ft_set_colors(t_file *file, char **col, unsigned int flag);
+int					ft_compare_mtim(t_file *current, t_file *next);
+int					ft_compare_atim(t_file *current, t_file *next);
+int					ft_compare_name(t_file *current, t_file *next);
+int					ft_is_dir(t_file *current, t_file *next);
 
-int		ft_dir_error(char *file);
+int					ft_dir_error(char *file);
 
-//libft
-char	*ft_strjoin_three(char *first, char *second, char *third);
-
-//debug
-void				print_t_ls(t_ls *ls);
 #endif

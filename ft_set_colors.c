@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 09:57:19 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 11:44:12 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 14:23:01 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static inline void	ft_set_exec_col(t_file *file, char **col)
 		*col = "\x1b[31m";
 }
 
-int		ft_set_colors(t_file *file, char **col, unsigned int flag)
+int					ft_set_colors(t_file *file, char **col, unsigned int flag)
 {
 	*col = "";
 	if (flag & COLOR)
@@ -56,6 +56,3 @@ int		ft_set_colors(t_file *file, char **col, unsigned int flag)
 	}
 	return (1);
 }
-
-
-

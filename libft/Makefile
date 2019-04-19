@@ -121,6 +121,7 @@ SRC_STR = \
 	ft_striteri.c \
 	ft_strjoin.c \
 	ft_strjoinfree.c \
+	ft_strjoin_three.c \
 	ft_strlcat.c \
 	ft_strlen.c \
 	ft_strmap.c \
@@ -144,11 +145,13 @@ OBJ = $(addprefix $(OBJ_PATH), $(SRCS:.c=.o))
 
 all : $(NAME) auteur
 
-$(NAME) : $(OBJ)
+$(NAME) : $(addprefix $(OBJ_PATH), $(BUILD_PATH)) $(OBJ)
 	ar rcs $(NAME) $(OBJ)
 
+$(addprefix $(OBJ_PATH), $(BUILD_PATH)) :
+	mkdir -p $@
+
 $(OBJ_PATH)%.o	: $(SRC_PATH)%.c
-	mkdir -p $(addprefix $(OBJ_PATH), $(BUILD_PATH))
 	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
 auteur:

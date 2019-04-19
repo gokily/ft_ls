@@ -6,13 +6,15 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:54 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 11:34:23 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 15:01:16 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/incl/libft.h"
+#include "libft/incl/ft_printf.h"
 #include "ft_ls.h"
 
-void		ft_print_dir_total(t_lfile *file)
+static inline void	ft_print_dir_total(t_lfile *file)
 {
 	unsigned int	size;
 
@@ -28,7 +30,7 @@ void		ft_print_dir_total(t_lfile *file)
 	return ;
 }
 
-static int		ft_getfile_in_dir(t_lfile *ldir, unsigned int flag,
+static inline int	ft_getfile_in_dir(t_lfile *ldir, unsigned int flag,
 		t_lfile **lfile)
 {
 	DIR				*dir;
@@ -36,15 +38,14 @@ static int		ft_getfile_in_dir(t_lfile *ldir, unsigned int flag,
 	char			*fullpath;
 	t_lfile			*lst_elem;
 
-	if (!(S_ISDIR(ldir->file->mode)))
-		return (0);
 	if (!(dir = opendir(ldir->file->fullpath)))
 		return (ft_dir_error(ldir->file->name));
 	while ((elem = readdir(dir)))
 	{
 		if (flag & ALL || elem->d_name[0] != '.')
 		{
-			fullpath = ft_strjoin_three(ldir->file->fullpath, "/", elem->d_name);
+			fullpath = ft_strjoin_three(ldir->file->fullpath, "/",
+					elem->d_name);
 			if (!fullpath || !(lst_elem = ft_lfile_new(fullpath, 0, flag)))
 			{
 				closedir(dir);
@@ -58,35 +59,41 @@ static int		ft_getfile_in_dir(t_lfile *ldir, unsigned int flag,
 	return (1);
 }
 
-//La fonciton recursive
-int			ft_print_dir(t_lfile *dir, t_ls *ls)
+static inline int	ft_print_dir2(t_lfile *dir, t_ls *ls, t_lfile **lfile)
 {
-	t_lfile		*lfile;
-	t_lfile		*tmp;
-
-	lfile = NULL;
 	if (ls->flag & FIRST)
 		ls->flag ^= FIRST;
 	else
 		ft_putendl("");
 	if (ls->flag & SEVERAL)
 		ft_printf("%s:\n", dir->file->fullpath);
-	if (!(ft_getfile_in_dir(dir, ls->flag, &lfile)))
+	if (!(ft_getfile_in_dir(dir, ls->flag, lfile)))
 		return (1);
-	ft_lfile_sort(&lfile, ls->flag);
+	ft_lfile_sort(lfile, ls->flag);
 	if (ls->flag & REC)
 		ls->flag |= SEVERAL;
 	if (ls->flag & LNG)
-		ft_print_dir_total(lfile);
-	ft_print_lfile(lfile, ls->flag);
+		ft_print_dir_total(*lfile);
+	ft_print_lfile(*lfile, ls->flag);
+	return (0);
+}
+
+int					ft_print_dir(t_lfile *dir, t_ls *ls)
+{
+	t_lfile		*lfile;
+	t_lfile		*tmp;
+
+	lfile = NULL;
+	if (ft_print_dir2(dir, ls, &lfile) == 1)
+		return (1);
 	if (ls->flag & REC)
-	{	
+	{
 		tmp = lfile;
 		while (tmp != NULL)
 		{
-			if (S_ISDIR(tmp->file->mode) && ft_strcmp(tmp->file->name, ".") && 
+			if (S_ISDIR(tmp->file->mode) && ft_strcmp(tmp->file->name, ".") &&
 					ft_strcmp(tmp->file->name, ".."))
-				if((ft_print_dir(tmp, ls)))
+				if ((ft_print_dir(tmp, ls)))
 					return (1);
 			tmp = tmp->next;
 		}

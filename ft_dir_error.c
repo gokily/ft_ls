@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 14:44:35 by gly               #+#    #+#             */
-/*   Updated: 2019/04/16 11:49:06 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 12:10:30 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int		ft_dir_error(char *file)
 {
 	char	*message;
 
-		if (!(message = ft_strjoin("ls: ", file)))
-		{
-			exit(EXIT_FAILURE);
-		}
-		perror(message);
-		free(message);
-		return(0);		
+	if (!(message = ft_strjoin("ls: ", file)))
+	{
+		exit(EXIT_FAILURE);
+	}
+	perror(message);
+	free(message);
+	return (0);
 }

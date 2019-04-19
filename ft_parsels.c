@@ -6,10 +6,14 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:16 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 13:13:18 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 15:01:29 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <stdlib.h>
+#include "libft/incl/libft.h"
+#include "libft/incl/ft_printf.h"
 #include "ft_ls.h"
 
 static inline t_ls	*ft_parsedir(char *dirpath, t_ls *ls)

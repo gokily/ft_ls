@@ -6,10 +6,12 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 13:13:40 by gly               #+#    #+#             */
-/*   Updated: 2019/02/22 17:07:06 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 15:00:41 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <time.h>
+#include "libft/incl/libft.h"
 #include "ft_ls.h"
 
 char	*ft_get_time(struct timespec file_timespec)

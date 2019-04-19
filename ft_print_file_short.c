@@ -6,13 +6,15 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 16:38:39 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 11:59:00 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 15:01:55 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
 #include <sys/ioctl.h>
 #include <unistd.h>
+#include "libft/incl/libft.h"
+#include "libft/incl/ft_printf.h"
+#include "ft_ls.h"
 
 static inline int		ft_get_window_size(void)
 {

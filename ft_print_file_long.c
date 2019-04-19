@@ -6,15 +6,19 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:48:59 by gly               #+#    #+#             */
-/*   Updated: 2019/04/18 14:18:52 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 15:01:40 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/types.h>
+#include <stdlib.h>
+#include "libft/incl/libft.h"
+#include "libft/incl/ft_printf.h"
 #include "ft_ls.h"
 
-int filetypeletter(int mode)
+static inline int	filetypeletter(int mode)
 {
-	char    c;
+	char	c;
 
 	if (S_ISREG(mode))
 		c = '-';
@@ -32,14 +36,14 @@ int filetypeletter(int mode)
 		c = 's';
 	else
 		c = '?';
-	return(c);
+	return (c);
 }
 
-char    *ft_lsperms(int mode)
+static inline char	*ft_lsperms(int mode)
 {
-	static const char *rwx[] = {"---", "--x", "-w-", "-wx",
+	static const char	*rwx[] = {"---", "--x", "-w-", "-wx",
 		"r--", "r-x", "rw-", "rwx"};
-	char	*perms;
+	char				*perms;
 
 	if (!(perms = ft_strnew(10)))
 		return (NULL);
@@ -53,50 +57,54 @@ char    *ft_lsperms(int mode)
 		perms[6] = (mode & S_IXGRP) ? 's' : 'l';
 	if (mode & S_ISVTX)
 		perms[9] = (mode & S_IXOTH) ? 't' : 'T';
-	return(perms);
+	return (perms);
 }
 
-int		ft_print_file_long(t_file *file, unsigned int flag, t_space space)
+static inline char	ft_get_ext(t_file *file)
 {
-	char	*perms;
-	char	*time_str;
-	char	ext;
+	char ext;
 
-	perms = ft_lsperms(file->mode);
-	(void)flag;
 	if (file->ext == 1)
 		ext = '@';
 	else if (file->acl == 1)
 		ext = '+';
 	else
 		ext = ' ';
+	return (ext);
+}
+
+static inline int	ft_print_file_long(t_file *file, unsigned int flag,
+		t_space space)
+{
+	char	*perms;
+	char	*time_str;
+	char	ext;
+
+	perms = ft_lsperms(file->mode);
 	if (!(time_str = ft_get_time(file->mtim)))
 		return (0);
-	ft_printf("%s%c ", perms, ext);
-	ft_printf("%*u ", space.one, (unsigned int)file->nlink);
-	ft_printf("%-*s  %-*s  ", space.two, file->uid, space.three, file->gid);
+	ext = ft_get_ext(file);
+	ft_printf("%s%c %*u %-*s  %-*s  ", perms, ext, space.one, file->nlink,
+			space.two, file->uid, space.three, file->gid);
 	if (S_ISCHR(file->mode) || S_ISBLK(file->mode))
-	{
 		ft_printf("%*u, %*u ", space.four_c - space.four_b - 2,
-				(unsigned int)major(file->rdev), space.four_b,
-				(unsigned int)minor(file->rdev));
-	}
+				major(file->rdev), space.four_b, minor(file->rdev));
 	else
-		ft_printf("%*u ", space.four_c, (unsigned int)file->size);
+		ft_printf("%*u ", space.four_c, file->size);
 	ft_printf("%s %s%s%s", time_str, flag & COLOR ? file->col : "",
 			file->name, flag & COLOR ? COLRESET : "");
 	if (S_ISLNK(file->mode))
 		ft_printf(" -> %s", file->link);
-	ft_printf("\n");
+	ft_printf("%c", '\n');
 	free(time_str);
 	return (1);
 }
 
-int		ft_print_lfile_long(t_lfile *file, unsigned int flag)
+int					ft_print_lfile_long(t_lfile *file, unsigned int flag)
 {
 	t_space	space;
 
-	space = ft_calculate_space(file, flag);
+	space = ft_calculate_space(file);
 	while (file != NULL)
 	{
 		if ((flag & ALL) || file->file->name[0] != '.')
@@ -108,4 +116,3 @@ int		ft_print_lfile_long(t_lfile *file, unsigned int flag)
 	}
 	return (1);
 }
-
