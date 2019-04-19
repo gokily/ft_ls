@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:16 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 11:34:50 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 13:13:18 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static inline t_ls	*ft_parsedir(char *dirpath, t_ls *ls)
 
 	if (!(path = ft_strdup(dirpath)))
 		return (NULL);
-	if (!(elem = ft_lfile_new(path, LSARG, 0)))
+	if (!(elem = ft_lfile_new(path, LSARG, ls->flag)))
 		return (NULL);
 	ft_lfile_push(&ls->ldir, elem);
 	return (ls);
@@ -45,6 +45,18 @@ static inline void	ft_check_illegal_flag(char *flag, t_ls *ls)
 	}
 }
 
+static inline void	ft_parseflag2(char *flag, t_ls *ls)
+{
+	if (*flag == 'C')
+		ls->flag |= COLUMN;
+	else if (*flag == '1')
+		ls->flag = ~(~ls->flag | COLUMN);
+	else if (*flag == 'G')
+		ls->flag |= COLOR;
+	else if (*flag == 'M')
+		ls->flag = ~(~ls->flag | COLOR);
+}
+
 static inline t_ls	*ft_parseflag(char *flag, t_ls *ls)
 {
 	ft_check_illegal_flag(flag, ls);
@@ -62,14 +74,8 @@ static inline t_ls	*ft_parseflag(char *flag, t_ls *ls)
 			ls->flag |= MTIM;
 		else if (*flag == 'u')
 			ls->flag |= ATIM;
-		else if (*flag == 'C')
-			ls->flag |= COLUMN;
-		else if (*flag == '1')
-			ls->flag = ~(~ls->flag | COLUMN);
-		else if (*flag == 'G')
-			ls->flag |= COLOR;
-		else if (*flag == 'M')
-			ls->flag = ~(~ls->flag | COLOR);
+		else
+			ft_parseflag2(flag, ls);
 		if (ft_strchr("C1", *flag))
 			ls->flag = ~(~ls->flag | LNG);
 		flag++;
@@ -77,22 +83,11 @@ static inline t_ls	*ft_parseflag(char *flag, t_ls *ls)
 	return (ls);
 }
 
-static inline int	ft_check_dir_exist(char *filename)
-{
-	struct stat statbuf;
-
-	if (lstat(filename, &statbuf) == -1)
-	{
-		ft_dir_error(filename);
-		return (0);
-	}
-	return (1);
-}
-
 t_ls				*ft_parsels(int ac, char **av)
 {
-	t_ls	*ls;
-	int		i;
+	t_ls		*ls;
+	int			i;
+	struct stat	statbuf;
 
 	if (!(ls = ft_t_ls_new()))
 		return (NULL);
@@ -104,8 +99,8 @@ t_ls				*ft_parsels(int ac, char **av)
 		else
 		{
 			ls->nbdir++;
-			if (ft_check_dir_exist(av[i]) == 0)
-				ls->status = 1;
+			if (lstat(av[i], &statbuf) == -1)
+				ls->status = ft_dir_error(av[i]) == 0 ? 1 : 0;
 			else if (!(ls = ft_parsedir(av[i], ls)))
 				return (NULL);
 		}
