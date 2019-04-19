@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:16 by gly               #+#    #+#             */
-/*   Updated: 2019/04/18 14:29:14 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 11:34:50 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static inline t_ls	*ft_parsedir(char *dirpath, t_ls *ls)
 
 	if (!(path = ft_strdup(dirpath)))
 		return (NULL);
-	if (!(elem = ft_lfile_new(path, LSARG)))
+	if (!(elem = ft_lfile_new(path, LSARG, 0)))
 		return (NULL);
 	ft_lfile_push(&ls->ldir, elem);
 	return (ls);

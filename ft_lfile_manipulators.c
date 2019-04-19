@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 16:06:43 by gly               #+#    #+#             */
-/*   Updated: 2019/04/16 15:04:08 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 11:42:58 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,6 @@ char	*ft_filename(const char *filepath, unsigned int flag)
 	return (name);
 }
 
-t_file	*ft_set_col(t_file *elem)
-{
-	if (S_ISDIR(elem->mode))
-		elem->col = ft_strdup(COL_CYAN);
-	else if (S_ISLNK(elem->mode))
-		elem->col = ft_strdup(COL_MAGENTA);
-	else if (S_ISBLK(elem->mode))
-		elem->col = ft_strdup(COL_BLUE BG_CYAN);
-	else if (S_ISCHR(elem->mode))
-		elem->col = ft_strdup(COL_BLUE BG_YELLOW);
-	else if (elem->mode & S_IXUSR)
-		elem->col = ft_strdup(COL_RED);
-	else
-		elem->col = ft_strdup(COLRESET);
-	if (elem->col == NULL)
-		return (NULL);
-	else
-		return (elem);
-}
-
 void	ft_fill_file(t_file *elem, struct stat statbuf)
 {
 	elem->mode = statbuf.st_mode;
@@ -70,7 +50,7 @@ void	ft_fill_file(t_file *elem, struct stat statbuf)
 	elem->link = NULL;
 }
 
-t_lfile	*ft_lfile_new(char *filepath, unsigned int flag)
+t_lfile	*ft_lfile_new(char *filepath, unsigned int lsflag, unsigned int flag)
 {
 	t_lfile		*elem;
 	struct stat	statbuf;
@@ -87,7 +67,7 @@ t_lfile	*ft_lfile_new(char *filepath, unsigned int flag)
 		ft_dir_error(filepath);
 		return (NULL);
 	}
-	if (!(file->name = ft_filename(filepath, flag)))
+	if (!(file->name = ft_filename(filepath, lsflag)))
 	{
 		free(elem);
 		return (NULL);
@@ -99,7 +79,7 @@ t_lfile	*ft_lfile_new(char *filepath, unsigned int flag)
 	acl_free(acl);
 	file->fullpath = filepath;
 	ft_fill_file(file, statbuf);
-	ft_set_col(file);
+	ft_set_colors(file, &(file->col), flag);
 	if (S_ISLNK(statbuf.st_mode))
 	{
 		if (!(link = ft_strnew(BUFFSIZE)))
@@ -149,7 +129,6 @@ void	ft_lfile_delall(t_lfile *lfile)
 		ft_freenull(file->name);
 		ft_freenull(file->fullpath);
 		ft_freenull(file->link);
-		ft_freenull(file->col);
 		ft_freenull(file);
 		ft_freenull(lfile);
 	}	

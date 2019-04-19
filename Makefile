@@ -6,7 +6,7 @@
 #    By: gly <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/28 16:18:37 by gly               #+#    #+#              #
-#    Updated: 2019/04/14 14:47:20 by gly              ###   ########.fr        #
+#    Updated: 2019/04/19 11:21:29 by gly              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC		=	ft_print_ls.c	\
 			ft_lfile_sort.c	\
 			ft_get_time.c	\
 			ft_dir_error.c	\
+			ft_set_colors.c \
 
 OBJ		=	$(SRC:.c=.o)
 
@@ -40,7 +41,7 @@ RM		=	/bin/rm -f
 all		:	$(NAME) auteur
 
 $(NAME)	:	$(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) -g -o $(NAME) $(OBJ) ft_strjoin_three.c print_t_ls.c $(LIBFTFLAG) 
+	$(CC) $(CFLAGS) -g -o $(NAME) $(OBJ) ft_strjoin_three.c $(LIBFTFLAG) 
 	
 $(LIBFT) :
 	make -C libft

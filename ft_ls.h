@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2019/04/18 14:29:24 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 11:35:12 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@
 #include "libft/incl/libft.h"
 #include "libft/incl/ft_printf.h"
 
-#include <stdio.h>
-
 # define LNG 1
 # define REC 1 << 1
 # define ALL 1 << 2
@@ -41,14 +39,6 @@
 # define LSARG 1
 # define BUFFSIZE 1024
 # define LSOPTION "CGMRalrtu1"
-#define COL_RED     "\x1b[31m"
-#define COL_GREEN   "\x1b[32m"
-#define COL_YELLOW  "\x1b[33m"
-#define BG_YELLOW  "\x1b[43m"
-#define COL_BLUE    "\x1b[34m"
-#define COL_MAGENTA "\x1b[35m"
-#define COL_CYAN "\x1b[96m"
-#define BG_CYAN "\x1b[46m"
 #define COLRESET   "\x1b[0m"
 
 typedef struct		s_file
@@ -110,7 +100,7 @@ typedef struct		s_space
 
 t_ls				*ft_parsels(int ac, char **av);
 
-t_lfile	*ft_lfile_new(char *filepath, unsigned int flag);
+t_lfile	*ft_lfile_new(char *filepath, unsigned int lsflag, unsigned int flag);
 void	ft_lfile_push(t_lfile **lst, t_lfile *elem);
 void	ft_lfile_sort(t_lfile **lfile, unsigned int flag);
 void	ft_lfile_delall(t_lfile *file);
@@ -126,6 +116,7 @@ int		ft_print_lfile_long(t_lfile *file, unsigned int flag);
 t_space	ft_calculate_space(t_lfile *file, unsigned int flag);
 
 char	*ft_get_time(struct timespec file_timespec);
+int		ft_set_colors(t_file *file, char **col, unsigned int flag);
 
 int		ft_dir_error(char *file);
 

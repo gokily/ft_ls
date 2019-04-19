@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 16:38:39 by gly               #+#    #+#             */
-/*   Updated: 2019/04/18 16:48:41 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 11:59:00 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,30 +51,30 @@ static inline t_linfo	ft_get_lfile_info(t_lfile *file)
 static inline void		ft_print_lfile_columns(t_lfile *file, t_linfo linfo,
 		unsigned int flag)
 {
-	t_lfile	*head;
+	t_lfile	*tmp;
 
-	head = file;
 	while (linfo.i++ < linfo.nrow)
 	{
-		file = head;
+		tmp = file;
 		linfo.j = 1;
 		while (linfo.j++ <= linfo.ncol)
 		{
 			linfo.k = 0;
-			ft_printf("%s%-*s%s", flag ? file->file->col : "", linfo.maxl + 1,
-					file->file->name, flag ? COLRESET : "");
+			ft_printf("%s%s%s%*s", tmp->file->col, tmp->file->name,
+					flag ? COLRESET : "",
+					linfo.maxl + 1 - ft_strlen(tmp->file->name), " ");
 			while (linfo.k++ < linfo.nrow)
 			{
-				file = file->next;
-				if (file == NULL)
+				tmp = tmp->next;
+				if (tmp == NULL)
 				{
 					linfo.k = linfo.nrow;
 					linfo.j = linfo.ncol + 1;
 				}
 			}
 		}
-		ft_putchar('\n');
-		head = head->next;
+		ft_printf("%c", '\n');
+		file = file->next;
 	}
 }
 

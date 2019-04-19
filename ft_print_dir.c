@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:54 by gly               #+#    #+#             */
-/*   Updated: 2019/04/18 15:24:26 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/19 11:34:23 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int		ft_getfile_in_dir(t_lfile *ldir, unsigned int flag,
 		if (flag & ALL || elem->d_name[0] != '.')
 		{
 			fullpath = ft_strjoin_three(ldir->file->fullpath, "/", elem->d_name);
-			if (!fullpath || !(lst_elem = ft_lfile_new(fullpath, 0)))
+			if (!fullpath || !(lst_elem = ft_lfile_new(fullpath, 0, flag)))
 			{
 				closedir(dir);
 				ft_lfile_delall(*lfile);
