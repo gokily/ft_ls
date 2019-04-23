@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:30 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 18:47:02 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/23 15:43:22 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static inline t_ls		*ft_print_ls(t_ls *ls)
 	lfile = NULL;
 	if (ls->nbdir > 1)
 		ls->flag |= SEVERAL;
-	if (!(S_ISDIR(ls->ldir->file->mode)))
+	if (!(S_ISDIR(ls->ldir->file->mode)) && !(ls->ldir->file->flag & DIRLNK))
 	{
 		ls->flag ^= FIRST;
 		ls->ldir = ft_find_first_real_dir(ls->ldir, &lfile);

@@ -6,7 +6,7 @@
 #    By: gly <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/28 16:18:37 by gly               #+#    #+#              #
-#    Updated: 2019/04/19 14:52:12 by gly              ###   ########.fr        #
+#    Updated: 2019/04/23 15:04:56 by gly              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC		=	ft_print_ls.c	\
 			ft_dir_error.c	\
 			ft_set_colors.c \
 			ft_calculate_space.c \
+			ft_sort_dir_arg.c \
 
 OBJ		=	$(SRC:.c=.o)
 

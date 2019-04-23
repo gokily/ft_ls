@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 12:17:31 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 15:00:29 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/23 16:31:02 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,16 @@ int	ft_compare_name(t_file *current, t_file *next)
 
 int	ft_is_dir(t_file *current, t_file *next)
 {
-	return (S_ISDIR(current->mode) - S_ISDIR(next->mode));
+	int		first;
+	int		second;
+
+	if (S_ISDIR(current->mode) || current->flag & DIRLNK)
+		first = 1;
+	else
+		first = 0;
+	if (S_ISDIR(next->mode) || next->flag & DIRLNK)
+		second = 1;
+	else
+		second = 0;
+	return (first - second);
 }

@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 17:11:58 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/23 15:04:37 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define ENDOPT 1 << 9
 # define FIRST 1 << 10
 # define LDIR 1 << 11
+# define DIRLNK 1 << 12
 # define LSARG 1
 # define BUFFSIZE 1024
 # define LSOPTION "CGMRalrtu1"
@@ -52,6 +53,7 @@ typedef struct		s_file
 	int				ext;
 	int				acl;
 	char			*col;
+	int				flag;
 }					t_file;
 
 typedef struct		s_lfile
@@ -112,6 +114,8 @@ int					ft_compare_mtim(t_file *current, t_file *next);
 int					ft_compare_atim(t_file *current, t_file *next);
 int					ft_compare_name(t_file *current, t_file *next);
 int					ft_is_dir(t_file *current, t_file *next);
+
+void				ft_sort_dir_arg(char **av, int i, int ac);
 
 int					ft_dir_error(char *file, t_ls *ls);
 

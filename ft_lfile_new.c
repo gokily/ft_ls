@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 14:33:40 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 18:49:46 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/23 16:34:31 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,29 @@ static inline char	*ft_filename(const char *filepath, unsigned int flag)
 	return (name);
 }
 
+static inline int	ft_fill_link(t_file *elem, struct stat statbuf)
+{
+	char	*link;
+
+	elem->link = NULL;
+	if (S_ISLNK(statbuf.st_mode))
+	{
+		if (!(link = ft_strnew(BUFFSIZE)))
+			return (0);
+		readlink(elem->fullpath, link, BUFFSIZE);
+		lstat(link, &statbuf);
+		if (S_ISDIR(statbuf.st_mode))
+			elem->flag |= DIRLNK;
+		elem->link = link;
+	}
+	return (1);
+}
+
 static inline int	ft_fill_file(t_file *elem, struct stat statbuf)
 {
 	acl_t	acl;
-	char	*link;
 
+	elem->flag = 0;
 	elem->mode = statbuf.st_mode;
 	elem->nlink = statbuf.st_nlink;
 	elem->size = statbuf.st_size;
@@ -53,14 +71,8 @@ static inline int	ft_fill_file(t_file *elem, struct stat statbuf)
 	elem->atim = statbuf.st_atimespec;
 	elem->mtim = statbuf.st_mtimespec;
 	elem->rdev = statbuf.st_rdev;
-	elem->link = NULL;
-	if (S_ISLNK(statbuf.st_mode))
-	{
-		if (!(link = ft_strnew(BUFFSIZE)))
-			return (0);
-		readlink(elem->fullpath, link, BUFFSIZE);
-		elem->link = link;
-	}
+	if (ft_fill_link(elem, statbuf) == 0)
+		return (0);
 	acl = NULL;
 	acl = acl_get_link_np(elem->fullpath, ACL_TYPE_EXTENDED);
 	elem->acl = acl == NULL ? 0 : 1;
@@ -86,14 +98,12 @@ t_lfile				*ft_lfile_new(char *filepath, unsigned int lsflag,
 		return (NULL);
 	}
 	if (!(file->name = ft_filename(filepath, lsflag)))
-	{
-		free(elem);
 		return (NULL);
-	}
 	file->fullpath = filepath;
 	if (!(ft_fill_file(file, statbuf)))
 		return (NULL);
-	file->ext = listxattr(filepath, namebuf, BUFFSIZE, 0) > 0 ? 1 : 0;
+	file->ext = listxattr(filepath, namebuf, BUFFSIZE, XATTR_NOFOLLOW) > 0
+		? 1 : 0;
 	ft_set_colors(file, &(file->col), flag);
 	elem->next = NULL;
 	return (elem);

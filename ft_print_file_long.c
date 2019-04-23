@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:48:59 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 17:45:48 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/23 16:22:35 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static inline char	*ft_lsperms(int mode)
 	if (mode & S_ISUID)
 		perms[3] = (mode & S_IXUSR) ? 's' : 'S';
 	if (mode & S_ISGID)
-		perms[6] = (mode & S_IXGRP) ? 's' : 'l';
+		perms[6] = (mode & S_IXGRP) ? 's' : 'S';
 	if (mode & S_ISVTX)
 		perms[9] = (mode & S_IXOTH) ? 't' : 'T';
 	return (perms);
@@ -96,6 +96,7 @@ static inline int	ft_print_file_long(t_file *file, unsigned int flag,
 	if (S_ISLNK(file->mode))
 		ft_printf(" -> %s", file->link);
 	ft_printf("%c", '\n');
+	free(perms);
 	free(time_str);
 	return (1);
 }

@@ -1,35 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dir_error.c                                     :+:      :+:    :+:   */
+/*   ft_sort_dir_arg.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/01 14:44:35 by gly               #+#    #+#             */
-/*   Updated: 2019/04/23 15:32:23 by gly              ###   ########.fr       */
+/*   Created: 2019/04/23 14:59:25 by gly               #+#    #+#             */
+/*   Updated: 2019/04/23 15:06:02 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
 #include "libft/incl/libft.h"
-#include "ft_ls.h"
 
-int		ft_dir_error(char *file, t_ls *ls)
+void	ft_sort_dir_arg(char **av, int i, int ac)
 {
-	char	*message;
+	int		n;
+	int		flag;
+	char	*tmp;
 
-	if (ft_strlen(file) == 0)
+	flag = 0;
+	while (flag == 0)
 	{
-		perror("ls: fts_open");
-		free(ls);
-		exit(EXIT_FAILURE);
+		n = i;
+		flag = 1;
+		while (n < ac - 1)
+		{
+			if (ft_strcmp(av[n], av[n + 1]) > 0)
+			{
+				tmp = av[n];
+				av[n] = av[n + 1];
+				av[n + 1] = tmp;
+				flag = 0;
+			}
+			n++;
+		}
 	}
-	if (!(message = ft_strjoin("ls: ", file)))
-		exit(EXIT_FAILURE);
-	ls->status = 1;
-	perror(message);
-	free(message);
-	return (1);
 }

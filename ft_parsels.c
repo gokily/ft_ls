@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:16 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 18:44:45 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/23 15:14:33 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ t_ls				*ft_parsels(int ac, char **av)
 			ls = ft_parseflag(av[i] + 1, ls);
 		else
 		{
+			ft_sort_dir_arg(av, i, ac);
 			ls->nbdir++;
 			ls->flag |= ENDOPT;
 			if (lstat(av[i], &statbuf) == -1)
