@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 11:01:35 by gly               #+#    #+#             */
-/*   Updated: 2019/04/25 11:12:58 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/25 12:15:26 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int		ft_set_uid_gid(t_file *elem, struct stat statbuf)
 	if (pwd == NULL)
 		elem->uid = ft_itoa(statbuf.st_uid);
 	else
-		elem->uid = pwd->pw_name;
+		elem->uid = ft_strdup(pwd->pw_name);
 	grp = getgrgid(statbuf.st_gid);
 	if (grp == NULL)
 		elem->gid = ft_itoa(statbuf.st_uid);
 	else
-		elem->gid = grp->gr_name;
+		elem->gid = ft_strdup(grp->gr_name);
 	return (elem->uid == NULL || elem->uid == NULL ? 0 : 1);
 }
