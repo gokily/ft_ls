@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:52:54 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 17:12:37 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/25 11:42:59 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ int					ft_print_dir(t_lfile *dir, t_ls *ls)
 		tmp = lfile;
 		while (tmp != NULL)
 		{
-			if (S_ISDIR(tmp->file->mode) && ft_strcmp(tmp->file->name, ".") &&
-					ft_strcmp(tmp->file->name, ".."))
+			if (S_ISDIR(tmp->file->mode) && ft_strcmp(tmp->file->name, ".")
+					&& ft_strcmp(tmp->file->name, ".."))
 				if ((ft_print_dir(tmp, ls)))
 					return (1);
 			tmp = tmp->next;

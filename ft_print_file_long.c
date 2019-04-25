@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:48:59 by gly               #+#    #+#             */
-/*   Updated: 2019/04/23 16:22:35 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/25 11:48:29 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,10 @@ static inline int	ft_print_file_long(t_file *file, unsigned int flag,
 	ft_printf("%s%c %*u %-*s  %-*s  ", perms, ext, space.one, file->nlink,
 			space.two, file->uid, space.three, file->gid);
 	if (S_ISCHR(file->mode) || S_ISBLK(file->mode))
-		ft_printf("%*u, %*u ", space.four_c - space.four_b - 2,
-				major(file->rdev), space.four_b, minor(file->rdev));
+		ft_printf("%*u, %*u ", space.f_c - space.f_b - 2,
+				major(file->rdev), space.f_b, minor(file->rdev));
 	else
-		ft_printf("%*u ", space.four_c, file->size);
+		ft_printf("%*u ", space.f_c, file->size);
 	ft_printf("%s %s%s%s", time_str, flag & COLOR ? file->col : "",
 			file->name, flag & COLOR ? COLRESET : "");
 	if (S_ISLNK(file->mode))

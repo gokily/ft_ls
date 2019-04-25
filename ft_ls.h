@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2019/04/25 11:12:03 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/25 11:47:42 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ typedef struct		s_space
 	int	one;
 	int	two;
 	int	three;
-	int	four_a;
-	int	four_b;
-	int	four_c;
+	int	f_a;
+	int	f_b;
+	int	f_c;
 }					t_space;
 
 t_ls				*ft_parsels(int ac, char **av);

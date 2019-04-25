@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 14:07:33 by gly               #+#    #+#             */
-/*   Updated: 2019/04/19 17:52:06 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/25 11:47:37 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,26 +65,26 @@ static inline t_space	ft_calculate_space_four(t_lfile *file, t_space space)
 	int		tmp;
 
 	n = 0;
-	space.four_a = 0;
-	space.four_b = 0;
+	space.f_a = 0;
+	space.f_b = 0;
 	while (file != NULL)
 	{
 		if (S_ISCHR(file->file->mode) || S_ISBLK(file->file->mode))
 		{
-			space.four_a = space.four_a >
-				(int)ft_ulllen_base(major(file->file->rdev), 10) ?
-				space.four_a : (int)ft_ulllen_base(major(file->file->rdev), 10);
-			space.four_b = space.four_b >
-				(int)ft_ulllen_base(minor(file->file->rdev), 10) ?
-				space.four_b : (int)ft_ulllen_base(minor(file->file->rdev), 10);
+			space.f_a = space.f_a
+				> (int)ft_ulllen_base(major(file->file->rdev), 10)
+				? space.f_a : (int)ft_ulllen_base(major(file->file->rdev), 10);
+			space.f_b = space.f_b
+				> (int)ft_ulllen_base(minor(file->file->rdev), 10)
+				? space.f_b : (int)ft_ulllen_base(minor(file->file->rdev), 10);
 		}
 		tmp = ft_ulllen_base(file->file->size, 10);
 		n = n > tmp ? n : tmp;
 		file = file->next;
 	}
-	space.four_c = space.four_a != 0 && space.four_b != 0
-		&& space.four_a + space.four_b + 2 > n
-		? space.four_a + space.four_b + 2 : n;
+	space.f_c = space.f_a != 0 && space.f_b != 0
+		&& space.f_a + space.f_b + 2 > n
+		? space.f_a + space.f_b + 2 : n;
 	return (space);
 }
 
