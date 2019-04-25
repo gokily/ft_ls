@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:48:59 by gly               #+#    #+#             */
-/*   Updated: 2019/04/25 11:48:29 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/25 12:40:21 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static inline int	ft_print_file_long(t_file *file, unsigned int flag,
 	char	ext;
 
 	perms = ft_lsperms(file->mode);
-	if (!(time_str = ft_get_time(file->mtim)))
+	if (!(time_str = ft_get_time(flag & ATIM ? file->atim : file->mtim)))
 		return (0);
 	ext = ft_get_ext(file);
 	ft_printf("%s%c %*u %-*s  %-*s  ", perms, ext, space.one, file->nlink,
