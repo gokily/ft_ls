@@ -6,7 +6,7 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 14:50:48 by gly               #+#    #+#             */
-/*   Updated: 2019/04/23 15:04:37 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/25 11:12:03 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ t_space				ft_calculate_space(t_lfile *file);
 
 char				*ft_get_time(struct timespec file_timespec);
 int					ft_set_colors(t_file *file, char **col, unsigned int flag);
+int					ft_set_uid_gid(t_file *file, struct stat statbuf);
 
 int					ft_compare_mtim(t_file *current, t_file *next);
 int					ft_compare_atim(t_file *current, t_file *next);

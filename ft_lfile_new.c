@@ -6,16 +6,14 @@
 /*   By: gly <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 14:33:40 by gly               #+#    #+#             */
-/*   Updated: 2019/04/23 16:34:31 by gly              ###   ########.fr       */
+/*   Updated: 2019/04/25 11:14:59 by gly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
-#include <grp.h>
 #include <sys/xattr.h>
 #include <sys/acl.h>
-#include <pwd.h>
 #include "libft/incl/libft.h"
 #include "ft_ls.h"
 
@@ -66,12 +64,10 @@ static inline int	ft_fill_file(t_file *elem, struct stat statbuf)
 	elem->size = statbuf.st_size;
 	elem->blksize = statbuf.st_blksize;
 	elem->blkcnt = statbuf.st_blocks;
-	elem->uid = getpwuid(statbuf.st_uid)->pw_name;
-	elem->gid = getgrgid(statbuf.st_gid)->gr_name;
 	elem->atim = statbuf.st_atimespec;
 	elem->mtim = statbuf.st_mtimespec;
 	elem->rdev = statbuf.st_rdev;
-	if (ft_fill_link(elem, statbuf) == 0)
+	if (ft_fill_link(elem, statbuf) == 0 || ft_set_uid_gid(elem, statbuf) == 0)
 		return (0);
 	acl = NULL;
 	acl = acl_get_link_np(elem->fullpath, ACL_TYPE_EXTENDED);
