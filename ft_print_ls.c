@@ -72,7 +72,7 @@ int						main(int ac, char **av)
 		return (1);
 	if (ls->ldir == NULL)
 		return (ft_freels(ls));
-	ft_lfile_sort(&ls->ldir, LDIR);
+	ft_lfile_sort(&ls->ldir, LDIR | ls->flag);
 	ls = ft_print_ls(ls);
 	return (ft_freels(ls));
 }
